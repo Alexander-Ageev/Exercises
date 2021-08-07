@@ -10,7 +10,6 @@ result - data_may_be_ordered
 result - allocation_success # Результат работы Footbal
 переменная отсутствует - walkers_found # Результат работы white_walkers
 
-
 7.3. Проверьте, правильно ли вы даёте имена индексам циклов. Попробуйте найти случай, когда вместо i j k нагляднее использовать более выразительное имя.
 i - char # PrintingCosts
 i - person # MassVote
