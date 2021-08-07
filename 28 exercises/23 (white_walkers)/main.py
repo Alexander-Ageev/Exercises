@@ -23,14 +23,15 @@ def white_walkers(village):
     temp = split_string(village)
     numbers = temp[1]
     text = temp[0]
-    walkers = 0
-    citizens = 0
+    num_walkers = 0
+    num_citizens = 0
     for i in range(len(numbers) - 1):
         if numbers[i] + numbers[i+1] == 10:
-            citizens +=1
+            num_citizens +=1
             if find_symbol(text[i+1], '=') == 3:
-                walkers += 1
-    if citizens == walkers and citizens > 0:
-        return True
+                num_walkers += 1
+    if num_citizens == num_walkers and num_citizens > 0:
+        walkers_found = True
     else:
-        return False
+        walkers_found = False
+    return walkers_found

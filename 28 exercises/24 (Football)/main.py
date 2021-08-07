@@ -15,11 +15,11 @@ def check_sequence(indices_array):
 def Football(source_array, N):
     indices_to_sort = get_unsorted_index(source_array)
     if len(indices_to_sort) == 0:
-        result = False
+        allocation_success = False
     elif len(indices_to_sort) == 2:
-        result = True
+        allocation_success = True
     elif check_sequence(indices_to_sort):
-        result = True
+        allocation_success = True
     else:
-        result = False
-    return result
+        allocation_success = False
+    return allocation_success

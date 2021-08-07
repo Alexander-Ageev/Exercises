@@ -97,9 +97,9 @@ char_table = {
 
 def PrintingCosts(Line):
     expense = 0
-    for i in Line:
+    for char in Line:
         try:
-            expense += char_table[i]
+            expense += char_table[char]
         except:
             expense += 23
     return expense

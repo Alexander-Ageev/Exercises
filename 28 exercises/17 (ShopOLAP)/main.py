@@ -1,11 +1,11 @@
-def merge_items(item_name_count_array):
-    db = {}
-    for i in range(len(item_name_count_array)):
-        item_name_count = item_name_count_array[i].split()
-        if item_name_count[0] in db:
-            db[item_name_count[0]] += int(item_name_count[1])
+def merge_items(item_data_array):   # data_array: [name count]
+    db = {} # {name : count}
+    for i in range(len(item_data_array)):
+        item_data = item_data_array[i].split()
+        if item_data[0] in db:
+            db[item_data[0]] += int(item_data[1])
         else:
-            db[item_name_count[0]] = int(item_name_count[1])
+            db[item_data[0]] = int(item_data[1])
     grouped_items_array = list(db.items())
     return grouped_items_array
 
@@ -16,7 +16,7 @@ def sort_items_for_count(items):
     return items
 
 def sort_items_for_name(items):
-    report = []
+    sorted_items = []
     i = 0
     while i < len(items):
         j = i + 1
@@ -25,9 +25,9 @@ def sort_items_for_name(items):
             items_with_equal_count.append(str(items[j][1]) + ' ' + str(items[j][0]))
             j += 1
         items_with_equal_count = sorted(items_with_equal_count)
-        report += items_with_equal_count
+        sorted_items += items_with_equal_count
         i = j
-    return report
+    return sorted_items
 
 def ShopOLAP(N, items_array):
     merged_items = merge_items(items_array)

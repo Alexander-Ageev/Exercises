@@ -7,5 +7,6 @@ def TankRush(H1, W1, S1, H2, W2, S2):
                 chunk += " " + str(map[k+i][j:j+W2] )
             chunk = chunk.strip(' ')
             if chunk == S2:
-                return True
-    return False
+                location_found =  True
+    location_found =  False
+    return location_found

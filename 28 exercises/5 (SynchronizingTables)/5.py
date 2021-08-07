@@ -9,16 +9,16 @@ def  my_sort(N, array):
     return array
 
 def SynchronizingTables(N, ids, salary):
-    temp = list(ids)
+    ids_array = list(ids)
     result = [0 for i in range(N)]
     sorted_salary = my_sort(N, salary)
     for i in range(N):
-        index = i
-        max = temp[i]
+        max_index = i
+        max = ids_array[i]
         for j  in range(N):
-            if temp[j] >= max:
-                max = temp[j]
-                index = j
-        temp[index] = 0
-        result[index] = sorted_salary[i]
+            if ids_array[j] >= max:
+                max = ids_array[j]
+                max_index = j
+        ids_array[max_index] = 0
+        result[max_index] = sorted_salary[i]
     return result

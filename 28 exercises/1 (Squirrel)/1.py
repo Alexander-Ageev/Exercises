@@ -5,6 +5,6 @@ def squirrel(N):
             nuts = 1
         else:
             nuts *= i
-    emeralds_s = str(nuts)[0]
-    emeralds = int(emeralds_s)
+    first_char = str(nuts)[0]
+    emeralds = int(first_char)
     return emeralds

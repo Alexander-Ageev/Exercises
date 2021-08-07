@@ -11,7 +11,7 @@ def do_first (a, partition):
 
 
 def MisterRobot(N, data):
-    result = True
+    data_may_be_ordered = True
     for i in range(N):
         current_number = i+1
         current_number_index = data.index(current_number)
@@ -28,6 +28,6 @@ def MisterRobot(N, data):
                     partition = do_first(current_number, data[start: stop])
                     data[start: stop] = partition
                 except:
-                    result = False
+                    data_may_be_ordered = False
                     break
-    return result
+    return data_may_be_ordered

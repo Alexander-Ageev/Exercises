@@ -3,13 +3,12 @@ result - allocation_possible # Результат работы Footbal
 переменная отсутствует - walkers_found # Результат работы white_walkers
 переменная отсутствует - double_transform_even # Результат работы TransformTransform
 result - input_string_valid # Результат работы SherlockValidString
-result - data_may_be_ordered
+result - data_may_be_ordered # MisterRobot
 
 7.2. Найдите несколько подходящих случаев, когда в вашем коде можно использовать типичные имена булевых переменных.
 переменная с результатом функции TankRush может быть названа found
 result - allocation_success # Результат работы Footbal
 переменная отсутствует - walkers_found # Результат работы white_walkers
-
 
 7.3. Проверьте, правильно ли вы даёте имена индексам циклов. Попробуйте найти случай, когда вместо i j k нагляднее использовать более выразительное имя.
 i - char # PrintingCosts

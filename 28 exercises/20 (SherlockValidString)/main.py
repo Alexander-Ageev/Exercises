@@ -1,8 +1,8 @@
 def counter (s):
-    counts = []
+    diff_char_counts = []
     for i in set(s):
-        counts.append(s.count(i))
-    return counts
+        diff_char_counts.append(s.count(i))
+    return diff_char_counts
 
 # function separates duplicate characters from exclusion
 # only works with data that has one exception
@@ -12,7 +12,6 @@ def separator(l):
     if len(l) == 2:
         result = l
         return result
-
     if l[0] == l[1]:
         result.append(l[0])
         result.append(l[-1])
@@ -22,17 +21,17 @@ def separator(l):
     return result
 
 def SherlockValidString(s):
-    num_diff_symbols = sorted(counter(s)) # list of different char counts
-    if len(set(num_diff_symbols)) <= 2:
-        sequence_info = separator(num_diff_symbols)# [base_seq, exclusion]
-        if len(set(num_diff_symbols)) == 1:# string [n, n, ... , n] type ('abc')
-            result = True
-        elif min(counter(num_diff_symbols)) == 1 and sequence_info[1] - sequence_info[0] == 1:# string [1, n, n, ... , n] type ('abbccdd')
-            result = True
-        elif min(counter(num_diff_symbols)) == 1 and sequence_info[1] == 1:# string [n, n, ... , n, n+1] type ('abcdd')
-            result = True
+    diff_symbols_count = sorted(counter(s)) # list of different char counts
+    if len(set(diff_symbols_count)) <= 2:
+        sequence_info = separator(diff_symbols_count)# [base_seq, exclusion]
+        if len(set(diff_symbols_count)) == 1:# string [n, n, ... , n] type ('abc')
+            input_string_valid = True
+        elif min(counter(diff_symbols_count)) == 1 and sequence_info[1] - sequence_info[0] == 1:# string [1, n, n, ... , n] type ('abbccdd')
+            input_string_valid = True
+        elif min(counter(diff_symbols_count)) == 1 and sequence_info[1] == 1:# string [n, n, ... , n, n+1] type ('abcdd')
+            input_string_valid = True
         else:
-            result = False    
+            input_string_valid = False    
     else:
-        result = False
-    return result
+        input_string_valid = False
+    return input_string_valid
