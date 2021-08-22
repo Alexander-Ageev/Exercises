@@ -1,3 +1,8 @@
+NUM_FOR_CITIZENS = 10
+WALKER_SYMBOL = '='
+NUM_SYMBOL_FOR_WALKER = 3
+
+
 def split_string(s):
     text = []
     numbers = []
@@ -26,9 +31,9 @@ def white_walkers(village):
     num_walkers = 0
     num_citizens = 0
     for i in range(len(numbers) - 1):
-        if numbers[i] + numbers[i+1] == 10:
+        if numbers[i] + numbers[i+1] == NUM_FOR_CITIZENS:
             num_citizens +=1
-            if find_symbol(text[i+1], '=') == 3:
+            if find_symbol(text[i+1], WALKER_SYMBOL) == NUM_SYMBOL_FOR_WALKER:
                 num_walkers += 1
     if num_citizens == num_walkers and num_citizens > 0:
         walkers_found = True
