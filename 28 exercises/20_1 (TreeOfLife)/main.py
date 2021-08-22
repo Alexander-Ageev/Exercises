@@ -1,5 +1,5 @@
 DIFFERENT_YEARS = 2 # Variants of the differents growth's ways
-MAP = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Map of the clear branches
+REMOVE_BRANCH_TEMPLATE = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Map of the clear branches
 
 class Tree(object):
     # Create matrix H*W, where 0 - none, n - age of branches
@@ -32,7 +32,7 @@ class Tree(object):
         for i in range(self.heigh):
             for j in range(self.width):
                 if self.state[i][j] >= 3:
-                    self._clear(i, j, MAP)
+                    self._clear(i, j, REMOVE_BRANCH_TEMPLATE)
     
     # Growth tree branches
     def growth(self):
