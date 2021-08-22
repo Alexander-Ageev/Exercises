@@ -1,13 +1,17 @@
+FREE_SQUARE = '0'
+DESCENT_SQUARE = '+'
+OCCUPIED_SQARE = '*'
+
 def check_free_square (battlefield):
     for i in range(len(battlefield)):
         for j in range(len(battlefield[i])):
-            if battlefield[i][j] == '0':
+            if battlefield[i][j] == FREE_SQUARE:
                 return True
     return False
 
 def descent(locations, battlefield):
     for i in range(len(locations)//2):
-        battlefield[locations[i*2]][locations[i*2+1]] = '+'
+        battlefield[locations[i*2]][locations[i*2+1]] = DESCENT_SQUARE
     return locations
 
 def calc_descent_locations(n, m, battlefield):
@@ -19,19 +23,19 @@ def calc_descent_locations(n, m, battlefield):
         y = n + descent_template[j][0]
         x = m + descent_template[j][1]
         if x in range(M) and y in range(N):
-            if battlefield[y][x] == '0':
+            if battlefield[y][x] == FREE_SQUARE:
                 locations.extend([y, x])
     return locations
 
 def conquest(locations, battlefield):
     descent_locations = []
     for i in range(len(locations)//2):
-        battlefield[locations[i*2]][locations[i*2+1]] = '*'
+        battlefield[locations[i*2]][locations[i*2+1]] = OCCUPIED_SQARE
         descent_locations.extend(calc_descent_locations(locations[i*2], locations[i*2+1], battlefield))
     return descent_locations
 
 def ConquestCampaign(N, M, L, battalion):
-    battlefield = [['0'] * M for k in range(N)]
+    battlefield = [ FREE_SQUARE] * M for k in range(N)]
     day = 1
     descent_locations = [i - 1 for i in battalion]
     conquest_locations = descent(descent_locations, battlefield)
