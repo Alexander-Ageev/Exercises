@@ -15,3 +15,23 @@
             red_light = current_time % cycle < track[i][1]
             if red_light:
 
+# Вариант 1 проверки деления на 0 
+# (приемлемый, но очень хрупкий, поскольку позволяет допустить непредвиденную ошибку дальше по алгоритму)
+    try:
+        Votes = [float(format( (Votes[i]/all_votes) * 100, '.3f' ) )  for i in range(N)]
+    except:
+        Votes = [0 for i in range(N)]
+
+# Вариант 2, более простой и универсальный
+ all_votes = sum(Votes)
+    if not (all_votes == 0):
+        дальнейший код, который не допускает значение all_votes = 0
+        result = ok
+    else:
+        result = error
+    return result
+
+# Вынес определение условия в отдельную переменную
+    need_more_digit = max(len(s1), len(s2)) % BASE != 0
+    if need_more_digit:
+
