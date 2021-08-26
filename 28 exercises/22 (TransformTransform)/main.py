@@ -10,7 +10,8 @@ def s_function(source_sequence):
 
 def TransformTransform(source_sequence, N):
     transform_sequence = s_function(s_function(source_sequence))
-    if sum(transform_sequence) % 2 == 0:
+    sequence_even = 1 - sum(transform_sequence) % 2
+    if sequence_even:
         double_transform_even = True
     else:
         double_transform_even = False
