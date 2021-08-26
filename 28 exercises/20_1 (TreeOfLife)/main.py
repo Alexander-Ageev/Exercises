@@ -1,5 +1,6 @@
 DIFFERENT_YEARS = 2 # Variants of the differents growth's ways
 REMOVE_BRANCH_TEMPLATE = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Map of the clear branches
+MAX_AGE = 3
 
 class Tree(object):
     # Create matrix H*W, where 0 - none, n - age of branches
@@ -23,7 +24,9 @@ class Tree(object):
         self.state[i][j] = 0
         for t in map:
             try:
-                if i + t[0] >= 0 and j + t[1] >=0 and self.state[i + t[0]] [j + t[1]] < 3:
+                branch_in_range = i + t[0] >= 0 and j + t[1] >= 0
+                branch_not_aged = self.state[i + t[0]] [j + t[1]] < MAX_AGE            
+                if branch_in_range and branch_not_aged:
                     self.state[i + t[0]] [j + t[1]] = 0
             except:
                 pass
@@ -31,7 +34,7 @@ class Tree(object):
     def remove_branches (self):
         for i in range(self.heigh):
             for j in range(self.width):
-                if self.state[i][j] >= 3:
+                if self.state[i][j] >= MAX_AGE:
                     self._clear(i, j, REMOVE_BRANCH_TEMPLATE)
     
     # Growth tree branches

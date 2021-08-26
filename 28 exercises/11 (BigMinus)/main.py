@@ -19,7 +19,8 @@ def fill_string(s, length):
 def BigMinus(s1, s2):
     result = ''
     temp = [0, 0]
-    if max(len(s1), len(s2)) % BASE != 0:
+    need_more_digit = max(len(s1), len(s2)) % BASE != 0
+    if need_more_digit:
         base_count = ( max(len(s1), len(s2))//BASE ) + 1
     else:
         base_count =   max(len(s1), len(s2))//BASE

@@ -1,5 +1,5 @@
 import unittest
-from temp import WordSearch
+from main import WordSearch
 import random
 
 class main_tests(unittest.TestCase):

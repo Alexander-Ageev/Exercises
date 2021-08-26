@@ -7,7 +7,8 @@ def Unmanned(L, N, track):
             else:
                 current_time += track[i][0] - track[i-1][0]
             cycle = track[i][1] + track[i][2]
-            if current_time % cycle < track[i][1]:
+            red_light = current_time % cycle < track[i][1]
+            if red_light:
                 waiting_time = track[i][1] - current_time % cycle 
                 current_time += waiting_time
             last_light_index = i

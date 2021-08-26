@@ -13,7 +13,8 @@ def queue_processing():
         if Task_Queue[i][0] == ADD_COMMAND:
             result += Task_Queue[i][1]
         elif Task_Queue[i][0] == DELETE_COMMAND:
-            if len(result) > int(Task_Queue[i][1]):
+            queue_not_empty = len(result) > int(Task_Queue[i][1])
+            if queue_not_empty:
                 result = result [0: len(result) - int(Task_Queue[i][1])]
             else:
                 result = ''

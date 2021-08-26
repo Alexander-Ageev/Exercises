@@ -49,10 +49,10 @@ def set_ring(ring, r, data):
 
 
 def MatrixTurn(data, M, N, T):
-    for r in range(min(M,N)//2):
-        ring = get_ring(data, r)
+    for current_radius in range(min(M,N)//2):
+        ring = get_ring(data, current_radius)
         ring = turn_ring(ring, T)
-        data = set_ring(ring, r, data)
+        data = set_ring(ring, current_radius, data)
     return data
     
 
