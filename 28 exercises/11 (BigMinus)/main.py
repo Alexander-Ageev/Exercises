@@ -17,7 +17,6 @@ def fill_string(s, length):
     return s
 
 def BigMinus(s1, s2):
-    result = ''
     temp = [0, 0]
     need_more_digit = max(len(s1), len(s2)) % BASE != 0
     if need_more_digit:
@@ -27,6 +26,7 @@ def BigMinus(s1, s2):
     max_length = base_count * BASE
     s1 = fill_string(s1, max_length)
     s2 = fill_string(s2, max_length)
+    result = ''
     for i in range(base_count):
         s1_portion = int( s1[ BASE * (base_count - (i+1)) : BASE * (base_count-i)] )
         s2_portion = int( s2[ BASE * (base_count - (i+1)) : BASE * (base_count-i)] )

@@ -1,4 +1,3 @@
-
 def LineAnalysis(line):
     count_star = 0
     for char in line:

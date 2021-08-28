@@ -1,8 +1,8 @@
 def matrix_size(s):
-    size = []
     n = len(s) ** 0.5
     row = int(n)
     column = int(n + 0.5)
+    size = []
     if row * column < len(s):
         size.extend([row+1, column])
     else:
@@ -10,7 +10,7 @@ def matrix_size(s):
     return size
 
 def encode_string(s):
-    s = ''.join(s.split(' '))    
+    s = ''.join(s.split(' '))    ы
     size = matrix_size(s)
     row = size[0]
     column = size[1]

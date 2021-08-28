@@ -1,5 +1,4 @@
 def search_number(s, e, field):
-    template = [[-1, 0], [0, 1], [1, 0], [0, -1]]
     N = len(field)
     M = len(field[0])
     n, m = 0, 0
@@ -8,6 +7,7 @@ def search_number(s, e, field):
             if field[i][j] == s:
                 n, m = i, j
                 break
+    template = [[-1, 0], [0, 1], [1, 0], [0, -1]]
     for j in range(len(template)):
         y = n + template[j][0]
         x = m + template[j][1]

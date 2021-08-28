@@ -1,4 +1,4 @@
-char_table = {
+CHAR_COST = {
     ' ': 0,
     '!': 9,
     '"': 6,
@@ -99,7 +99,7 @@ def PrintingCosts(Line):
     expense = 0
     for char in Line:
         try:
-            expense += char_table[char]
+            expense += CHAR_COST[char]
         except:
             expense += 23
     return expense

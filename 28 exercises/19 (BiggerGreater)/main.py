@@ -4,7 +4,6 @@ def BiggerGreater(input):
     len_part = 2 # length current partition
     length = len(input_list)
     last_char = input_list[length - 1]
-   
     while len_part <= length:
         current_char = input_list[ length - len_part ]
         part = input_list[length - len_part:length]
