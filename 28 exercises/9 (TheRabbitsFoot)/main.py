@@ -10,7 +10,7 @@ def matrix_size(s):
     return size
 
 def encode_string(s):
-    s = ''.join(s.split(' '))    ы
+    s = ''.join(s.split(' '))
     size = matrix_size(s)
     row = size[0]
     column = size[1]
