@@ -33,5 +33,11 @@ def queue_processing():
         elif Task_Queue[i][0] == DELETE_COMMAND:
 
 # Связывание на этапе выполнения. Задание на работу с файлами в курсе основы ООП.
-# В качестве параметра на этапе выполнения выступет количество файлов в папке. 
-# Добавляя/удаляя файлы из папки мы можем влить на работу программы.
+# В качестве параметра на этапе выполнения выступают строки данных в файле. 
+filename = f"{HOME}data.txt"
+with open(filename, 'rt', encoding='utf-8') as file:
+    string = file.readline()
+    string.rstrip('\n')
+    string_number = 0
+    while string:
+        data = string.split('\t')
