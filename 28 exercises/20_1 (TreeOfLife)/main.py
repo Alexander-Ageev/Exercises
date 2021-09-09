@@ -37,14 +37,12 @@ class Tree(object):
                 if self.state[i][j] >= MAX_AGE:
                     self._clear(i, j, REMOVE_BRANCH_TEMPLATE)
     
-    # Growth tree branches
     def growth(self):
         for i in range(self.heigh):
             for j in range(self.width):
                 if self.state[i][j] > 0:
                     self.state[i][j] += 1
     
-    # Growth new sprigs
     def new_sprig(self):
         for i in range(self.heigh):
             for j in range(self.width):
