@@ -37,12 +37,12 @@ def set_ring(ring, r, data):
         elif i == M - 1 - r:
             data[i] = data[i][0: r] + lower_line + data[i][N - r : ]
         elif r < i < M - 1 - r:
-            bl = data[i][0: r]
-            l = left_column[i - 1 - r]
-            m = data[i][r + 1: N - 1 - r]
-            rr = right_column[i - 1 - r]
-            ar = data[i][N - r + 1: ]
-            data[i] = bl + l + m + rr + ar
+            before_left_column_part = data[i][0: r]
+            left_column_part = left_column[i - 1 - r]
+            middle_part = data[i][r + 1: N - 1 - r]
+            right_column_part = right_column[i - 1 - r]
+            after_right_column_part = data[i][N - r + 1: ]
+            data[i] = before_left_column_part + left_column_part + middle_part + right_column_part + after_right_column_part
         else:
             pass
     return data

@@ -1,5 +1,5 @@
-def merge_items(item_data_array):   # data_array: [name count]
-    db = {} # {name : count}
+def merge_items(item_data_array):
+    db = {}
     for i in range(len(item_data_array)):
         item_data = item_data_array[i].split()
         item_name, item_count = item_data

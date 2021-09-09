@@ -23,12 +23,13 @@ def separator(l):
 def SherlockValidString(s):
     diff_symbols_count = sorted(counter(s)) # list of different char counts
     if len(set(diff_symbols_count)) <= 2:
-        sequence_info = separator(diff_symbols_count)# [base_seq, exclusion]
+        sequence_info = separator(diff_symbols_count)
+        base_symbol_number, exclusion_symbol_number = sequence_info
         if len(set(diff_symbols_count)) == 1:# string [n, n, ... , n] type ('abc')
             input_string_valid = True
-        elif min(counter(diff_symbols_count)) == 1 and sequence_info[1] - sequence_info[0] == 1:# string [1, n, n, ... , n] type ('abbccdd')
+        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number - base_symbol_number == 1:# string [1, n, n, ... , n] type ('abbccdd')
             input_string_valid = True
-        elif min(counter(diff_symbols_count)) == 1 and sequence_info[1] == 1:# string [n, n, ... , n, n+1] type ('abcdd')
+        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number == 1:# string [n, n, ... , n, n+1] type ('abcdd')
             input_string_valid = True
         else:
             input_string_valid = False    
