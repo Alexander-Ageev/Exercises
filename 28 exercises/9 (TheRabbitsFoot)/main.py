@@ -11,9 +11,7 @@ def matrix_size(s):
 
 def encode_string(s):
     s = ''.join(s.split(' '))
-    size = matrix_size(s)
-    row = size[0]
-    column = size[1]
+    row, column = matrix_size(s)
     encode = ''
     for i in range(column):
         for j in range(row):

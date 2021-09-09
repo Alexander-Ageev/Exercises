@@ -2,10 +2,11 @@ def merge_items(item_data_array):   # data_array: [name count]
     db = {} # {name : count}
     for i in range(len(item_data_array)):
         item_data = item_data_array[i].split()
-        if item_data[0] in db:
-            db[item_data[0]] += int(item_data[1])
+        item_name, item_count = item_data
+        if item_name in db:
+            db[item_name] += int(item_count)
         else:
-            db[item_data[0]] = int(item_data[1])
+            db[item_name] = int(item_count)
     grouped_items_array = list(db.items())
     return grouped_items_array
 
