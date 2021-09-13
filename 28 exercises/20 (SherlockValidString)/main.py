@@ -4,9 +4,9 @@ def counter (s):
         diff_char_counts.append(s.count(i))
     return diff_char_counts
 
-# function separates duplicate characters from exclusion
-# only works with data that has one exception
-# return [duplicate, exclusion]
+# функция отделяет последовательности отличающихся символов от последовательности-исключения 
+# Работает только если в исходных данных только одна последовательность-исключение
+# возвращает массив [duplicate, exclusion]
 def separator(l):
     result = []
     if len(l) == 2:

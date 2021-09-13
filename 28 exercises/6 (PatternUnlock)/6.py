@@ -42,7 +42,7 @@ def PatternUnlock(N, hits):
     for i in length:
         if i in template and count < 5:
             result += i
-            count += 1 * start_counter
+            count += start_counter
         elif i in dec_separator:
             start_counter = 1
     return result

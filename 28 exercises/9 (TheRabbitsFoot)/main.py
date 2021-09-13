@@ -35,7 +35,8 @@ def decode_string(s):
     decode = decode.strip(' ')
     return decode
 
-def TheRabbitsFoot(source_string, encode_mode): # encode = true: зашифровать; encode = false: расшировать
+# encode = true: зашифровать; encode = false: расшировать
+def TheRabbitsFoot(source_string, encode_mode):
     if encode_mode:
         encode = encode_string(source_string)
         return encode

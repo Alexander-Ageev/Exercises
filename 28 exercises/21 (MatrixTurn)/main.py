@@ -47,7 +47,8 @@ def set_ring(ring, r, data):
             pass
     return data
 
-
+# Внимание. Поворот матрицы осуществляется на один шаг(элемент) для любого радиуса. 
+# Полный оборот внешнего "кольца" матрицы может привести к нецелому количеству оборотов внутренних колец
 def MatrixTurn(data, M, N, T):
     for current_radius in range(min(M,N)//2):
         ring = get_ring(data, current_radius)

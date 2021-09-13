@@ -3,7 +3,7 @@ REMOVE_BRANCH_TEMPLATE = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Map of the clear b
 MAX_AGE = 3
 
 class Tree(object):
-    # Create matrix H*W, where 0 - none, n - age of branches
+# Create matrix H*W, where 0 - none, n - age of branches
     def __init__ (self, H, W, tree):
         self.heigh = H
         self.width = W
@@ -19,7 +19,7 @@ class Tree(object):
             result.append(line)
         self.state = result
     
-    # Clear old and adjacent branches
+# Clear old and adjacent branches
     def _clear(self, i, j, map):
         self.state[i][j] = 0
         for t in map:
@@ -49,7 +49,6 @@ class Tree(object):
                 if self.state[i][j] == 0:
                     self.state[i][j] = 1
 
-    # Create report of Tree simulation
     def report(self):
         report = []
         for i in range(self.heigh):

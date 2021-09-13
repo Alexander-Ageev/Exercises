@@ -101,5 +101,5 @@ def PrintingCosts(Line):
         try:
             expense += CHAR_COST[char]
         except:
-            expense += 23
+            expense += 23 # for another char
     return expense
