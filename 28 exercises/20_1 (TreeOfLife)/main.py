@@ -1,5 +1,5 @@
 DIFFERENT_YEARS = 2 # Variants of the differents growth's ways
-REMOVE_BRANCH_TEMPLATE = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Map of the clear branches
+
 MAX_AGE = 3
 
 class Tree(object):
@@ -32,10 +32,11 @@ class Tree(object):
                 pass
 
     def remove_branches (self):
+        REMOVE_TEMPLATE = [(-1, 0), (0, 1), (1, 0), (0, -1)]
         for i in range(self.heigh):
             for j in range(self.width):
                 if self.state[i][j] >= MAX_AGE:
-                    self._clear(i, j, REMOVE_BRANCH_TEMPLATE)
+                    self._clear(i, j, REMOVE_TEMPLATE)
     
     def growth(self):
         for i in range(self.heigh):

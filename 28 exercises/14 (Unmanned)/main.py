@@ -2,7 +2,6 @@ CURRENT_TIME = 0
 RED_LIGTH_TIME = 1
 GREEN_LIGHT_TIME = 2
 
-# track - list of the [current_time, time_red_i, time_green_i]
 def Unmanned(L, N, track):
     current_time = 0
     for i in range(len(track)):

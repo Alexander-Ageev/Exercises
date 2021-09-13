@@ -21,15 +21,19 @@ def separator(l):
     return result
 
 def SherlockValidString(s):
-    diff_symbols_count = sorted(counter(s)) # list of different char counts
+    # diff_symbols_count - Список неповторяющихся символов
+    diff_symbols_count = sorted(counter(s)) 
     if len(set(diff_symbols_count)) <= 2:
         sequence_info = separator(diff_symbols_count)
         base_symbol_number, exclusion_symbol_number = sequence_info
-        if len(set(diff_symbols_count)) == 1:# string [n, n, ... , n] type ('abc')
+        # строка вида [n, n, ... , n], например, 'abc'
+        if len(set(diff_symbols_count)) == 1:
             input_string_valid = True
-        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number - base_symbol_number == 1:# string [1, n, n, ... , n] type ('abbccdd')
+        # строка вида [1, n, n, ... , n], например, 'abbccdd'
+        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number - base_symbol_number == 1:
             input_string_valid = True
-        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number == 1:# string [n, n, ... , n, n+1] type ('abcdd')
+        # строка вида [n, n, ... , n, n+1], например, 'abcdd'
+        elif min(counter(diff_symbols_count)) == 1 and exclusion_symbol_number == 1:
             input_string_valid = True
         else:
             input_string_valid = False    

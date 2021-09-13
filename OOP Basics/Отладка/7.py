@@ -42,9 +42,6 @@ class circle(figure):
     def perimeter (self):
         return 2 * 3.14 * self.__radius
 
-
-
-
 TRIANGLE = 0
 CIRCLE = 1
 figures = []

@@ -5,7 +5,7 @@ UNDO_COMMAND = '4'
 REDO_COMMAND = '5'
 
 index = 0
-Task_Queue = [] # list of (command, data)
+Task_Queue = [] # list of (command_string, data_string)
 
 def queue_processing():
     result = ''
@@ -24,17 +24,18 @@ def BastShoe(command):
     global index, Task_Queue
     key = command[0]
     data = command[2:]
-    if key == ADD_COMMAND and index == len(Task_Queue): # add operation, no undo operations
+    undo = index != len(Task_Queue)
+    if key == ADD_COMMAND and not undo:
         Task_Queue.append( (key, data) )
         index = len(Task_Queue)
-    elif key == DELETE_COMMAND and index == len(Task_Queue): # delete operation, no undo
+    elif key == DELETE_COMMAND and not undo:
         Task_Queue.append( (key, data) )
         index = len(Task_Queue)
-    elif index < len(Task_Queue) and key in [ADD_COMMAND, DELETE_COMMAND]: # undo operations apply
+    elif undo and key in [ADD_COMMAND, DELETE_COMMAND]:
         Task_Queue = [ (ADD_COMMAND, queue_processing()) ]
         Task_Queue.append( (key, data) )
         index = len(Task_Queue)
-    elif key == GET_CHAR_COMMAND: # get text[index]
+    elif key == GET_CHAR_COMMAND:
         result = queue_processing()    
         try:
             result = result[int(data)]

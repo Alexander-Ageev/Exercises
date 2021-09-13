@@ -4,10 +4,10 @@ period = ['one-time', 'weekly', 'monthly', 'yearly']
 
 class time_apps:
     def __init__ (self, datetime, message, name, mode):
-         self._datetime = datetime # время срабатывания         
-         self._message = message # сообщение, которое выводит будильник
-         self._name = name # название будильника
-         self._mode = mode # режим работы: разовое/периодическое срабатывание 
+         self._datetime = datetime 
+         self._message = message 
+         self._name = name 
+         self._mode = mode 
 
     def get_datetime(self):
         return self._datetime
@@ -20,17 +20,16 @@ class time_apps:
 
 class Alarm(time_apps):
     def __init__(self, datetime = dt.time(12, 0), message = '', name = 'Новый будильник', 
-    mode = period[0], en = True, day_of_week = [False for i in range(7)]):
+    mode = period[0], en = True, day_of_week_enable = [False for i in range(7)]):
         super().__init__(datetime, message, name, mode)
-        self.__enable = en # включен ди будильник     
-        self.__day_of_week = day_of_week # дни недели работы будильника  
+        self.__enable = en 
+        self.__day_of_week = day_of_week_enable
 
     def get_day_of_week(self):
         return self.__day_of_week
     def get_enable(self):
         return self.__enable
 
-    # Мы можем включать и выключать будильник, не заходя в настройки.
     def enable (self):
         self.__enable = True
     def disable (self):
@@ -128,7 +127,6 @@ now_time = dt.datetime (2021, 2, 22, 0, 0, 0)
 time_offset = dt.timedelta (days = 1)
 for i in range(60):
     now_time += time_offset
-#    print(now_time)
     Al1.check(now_time)
     Al2.check(now_time)
     event.display_opt(now_time)

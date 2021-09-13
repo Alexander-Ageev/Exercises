@@ -94,6 +94,7 @@ CHAR_COST = {
     '|': 12,
     '}': 18,
     '~': 9 }
+ANOTHER_CHAR_COST = 23
 
 def PrintingCosts(Line):
     expense = 0
@@ -101,5 +102,5 @@ def PrintingCosts(Line):
         try:
             expense += CHAR_COST[char]
         except:
-            expense += 23 # for another char
+            expense += ANOTHER_CHAR_COST
     return expense

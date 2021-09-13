@@ -24,7 +24,7 @@ class triangle(figure):
         print('#__hight_calc done') # проверка успешного выполнения метода
     def square(self):
         # вычисление площади треугольника
-        assert self.__hight != 0 # проверка нужна для исключения работы с некорректными размерами фигуры
+        assert self.__hight != 0
         print(f'Плошадь треугольника: (a * h)/2')
 
 class circle(figure):
@@ -33,7 +33,6 @@ class circle(figure):
         self.__radius = 0  
         self.__radius_calc()  
     def __radius_calc(self):
-        # вычисление радиуса
         self.__radius = 2
         print(f'Радиус круга {self.__radius}')
     def square(self):
@@ -41,9 +40,6 @@ class circle(figure):
         print(f'Площадь круга: pi * r * r')
     def perimeter (self):
         return 2 * 3.14 * self.__radius
-
-
-
 
 TRIANGLE = 0
 CIRCLE = 1
