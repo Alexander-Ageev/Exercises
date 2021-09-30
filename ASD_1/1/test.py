@@ -80,14 +80,14 @@ class main_tests(unittest.TestCase):
         res = []
         self.assertEqual( data , res)
 
-    def test_del_one_void_all(self):
+    def test_del_mass_void_all(self):
         s_list = LinkedList()
         s_list.delete(1, True)
         data = s_list.list_all_nodes()    
         res = []
         self.assertEqual( data , res)
 
-    def test_del_one_first_1_all(self):
+    def test_del_mass_first_1_all(self):
         n1 = Node(1)
         s_list = LinkedList()
         s_list.add_in_tail(n1)
@@ -96,7 +96,7 @@ class main_tests(unittest.TestCase):
         res = []
         self.assertEqual( data , res)
     
-    def test_del_one_last_3_all(self):
+    def test_del_mass_first(self):
         n1 = Node(1)
         n2 = Node(1)
         n3 = Node(3)
@@ -110,7 +110,7 @@ class main_tests(unittest.TestCase):
         self.assertEqual( data , res)
 
 
-    def test_del_one_last_3_all(self):
+    def test_del_mass_no_element(self):
         n1 = Node(1)
         n2 = Node(1)
         n3 = Node(3)
@@ -121,6 +121,32 @@ class main_tests(unittest.TestCase):
         s_list.delete(4, True)
         data = s_list.list_all_nodes()    
         res = [1, 1, 3]
+        self.assertEqual( data , res)
+
+    def test_del_mass_last(self):
+        n1 = Node(1)
+        n2 = Node(3)
+        n3 = Node(3)
+        s_list = LinkedList()
+        s_list.add_in_tail(n1)
+        s_list.add_in_tail(n2)
+        s_list.add_in_tail(n3)
+        s_list.delete(3, True)
+        data = s_list.list_all_nodes()    
+        res = [1]
+        self.assertEqual( data , res)
+
+    def test_del_mass_all(self):
+        n1 = Node(1)
+        n2 = Node(1)
+        n3 = Node(1)
+        s_list = LinkedList()
+        s_list.add_in_tail(n1)
+        s_list.add_in_tail(n2)
+        s_list.add_in_tail(n3)
+        s_list.delete(1, True)
+        data = s_list.list_all_nodes()    
+        res = []
         self.assertEqual( data , res)
 
     def test_clean_full(self):

@@ -16,17 +16,19 @@ class LinkedList:
         else:
             self.tail.next = item
         self.tail = item
-    
+        return 0
+
     def print_all_nodes(self):
         node = self.head
-        while node != None:
-            #print(node.value)
+        while node is not None:
+            print(node.value)
             node = node.next
+        return 0
 
     def list_all_nodes(self):
         node = self.head
         nodes_list = []
-        while node != None:
+        while node is not None:
             nodes_list.append(node.value)
             node = node.next
         return nodes_list
@@ -40,81 +42,89 @@ class LinkedList:
         return None
 
     def find_all(self, val):
-        if self.head != None:
+        if self.head is not None:
             node = self.head
         else:
             return []
         find_list = []
-        while node != None:
+        while node is not None:
             if node.value == val:
                 find_list.append(node)
             node = node.next
         return find_list
 
-    def delete(self, val, all=False):
-        if self.head != None:
+    def delete(self, val, mass=False):
+        if self.head is not None:
             node = self.head
             before_node = node
         else:
             return None
-        while node != None:  
+        while node is not None:
             if node.value == val:
                 if self.head == node:
                     self.head = node.next
                 elif node == self.tail:
                     before_node.next = None
                     self.tail = before_node
+                    print('end del')
                 elif node.value == val:
                     before_node.next = node.next
-                if not all:
+                    print('mid del')
+                if not mass:
                     break
-            before_node = node
-            node = node.next                   
+            else:
+                before_node = node
+            node = node.next
+        return 0
+
 
     def clean(self):
-        if self.head != None:
+        if self.head is not None:
             node = self.head
         else:
-            return
-        while node != None:
+            return 0
+        while node is not None:
             next_node = node.next
             node.next = None
             node = next_node
         self.head = None
         self.tail = None
-        
+        return 0
+
     def len(self):
-        len = 0
-        if self.head != None:
+        length = 0
+        if self.head is not None:
             node = self.head
         else:
-            return len
-        while node != None:
-            len += 1
+            return length
+        while node is not None:
+            length += 1
             node = node.next
-        return len
-        
-    def insert(self, afterNode, newNode):
-        if self.head == None and not afterNode:
-            self.head = newNode
-            return
-        elif self.head != None and not afterNode:
+        return length
+
+    def insert(self, after_node, new_node):
+        if self.head is None and not after_node:
+            self.head = new_node
+            return 0
+        elif self.head is not None and not after_node:
             temp = self.head
-            self.head = newNode
+            self.head = new_node
             self.head.next = temp
-            return
-        elif self.head == None and afterNode:
-            return
+            return 0
+        elif self.head is None and after_node:
+            return None
         else:
             node = self.head
-        while node != None:
-            if node == afterNode:
+        while node is not None:
+            if node is after_node:
                 try:
-                    temp = afterNode.next
-                    afterNode.next = newNode
-                    newNode.next = temp
-                except:
-                    afterNode.next = newNode
-                    newNode.next = None
-                    self.tail = newNode
+                    temp = after_node.next
+                    after_node.next = new_node
+                    new_node.next = temp
+                except IndexError:
+                    after_node.next = new_node
+                    new_node.next = None
+                    self.tail = new_node
+                return 0
             node = node.next
+        return None
