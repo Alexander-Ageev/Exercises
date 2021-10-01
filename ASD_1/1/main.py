@@ -107,7 +107,6 @@ class LinkedList:
             self.tail = new_node
             return 0
         elif self.head is not None and not after_node:
-            temp = self.head
             self.head, new_node.next = new_node, self.head
             return 0
         elif self.head is None and after_node:
@@ -125,35 +124,3 @@ class LinkedList:
 
     def get_head_tail (self):
         return [self.head, self.tail]
-
-    def insert1(self, after_node, new_node):
-        if self.head is None and not after_node:
-            print('Hello?')
-            self.head = new_node
-            self.tail = new_node
-            return 0
-        elif self.head is not None and not after_node:
-            print("Original turn")
-            temp = self.head
-            self.head = new_node
-            self.head.next = temp
-            return 0
-        elif self.head is None and after_node:
-            return None
-        else:
-            node = self.head
-        while node is not None:
-            if node is after_node:
-                try:
-                    print("No, I'm here")
-                    temp = after_node.next
-                    after_node.next = new_node
-                    new_node.next = temp
-                except IndexError:
-                    print('i;m here')
-                    after_node.next = new_node
-                    new_node.next = None
-                    self.tail = new_node
-                return 0
-            node = node.next
-        return None
