@@ -73,7 +73,7 @@ class LinkedList:
             else:
                 before_node = node
             node = node.next
-        if self.head == None:
+        if self.head is None:
             self.tail = None
         return 0
 
