@@ -44,6 +44,15 @@ class main_tests(unittest.TestCase):
         res =  [32, 17, 999]
         self.assertEqual( data, res)
 
+    def test_insert_with_extension_1(self):
+        a = DynArray()
+        for i in range(16):
+            a.append(i)
+        a.insert(1, 999)
+        data = [a.capacity, a.__len__(), a.__getitem__(1)]
+        res =  [32, 17, 999]
+        self.assertEqual( data, res)
+
     def test_delete_first(self):
         a = DynArray()
         for i in range(10):
@@ -51,6 +60,15 @@ class main_tests(unittest.TestCase):
         a.delete(0)
         data = [a.capacity, a.__len__(), a.__getitem__(0)]
         res =  [16, 9, 1]
+        self.assertEqual( data, res)
+
+    def test_delete_one(self):
+        a = DynArray()
+        for i in range(1):
+            a.append(i)
+        a.delete(0)
+        data = [a.capacity, a.__len__()]
+        res =  [16, 0]
         self.assertEqual( data, res)
 
     def test_delete_middle(self):
@@ -79,6 +97,17 @@ class main_tests(unittest.TestCase):
         a.delete(3)
         data = [a.capacity, a.__len__(), a.__getitem__(14)]
         res =  [21, 15, 15]
+        self.assertEqual( data, res)
+
+
+    def test_delete_with_resize_1(self):
+        a = DynArray()
+        for i in range(17):
+            a.append(i)
+        a.delete(16)
+        a.delete(15)
+        data = [a.capacity, a.__len__(), a.__getitem__(14)]
+        res =  [21, 15, 14]
         self.assertEqual( data, res)
 
     def test_delete_error(self):

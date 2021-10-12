@@ -45,7 +45,7 @@ class DynArray:
                     elif index == i:
                         new_array[index] = itm
                     else:
-                        new_array[index + 1] = self.array[index]
+                        new_array[index] = self.array[index -1]
                 self.array = new_array
             else:
                 self.array[self.count] = itm
