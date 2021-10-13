@@ -1,4 +1,5 @@
 import unittest
+import random
 from main import DynArray
 
 class main_tests(unittest.TestCase):
@@ -16,7 +17,16 @@ class main_tests(unittest.TestCase):
         for i in range(10):
             a.append(i)
         a.insert(5, 999)
-        data = [a.capacity, a.__len__(), a.__getitem__(5)]
+        data = [a.capacity, a.__len__(), a.__getitem__(5), a.__getitem__(6)]
+        res =  [16, 11, 999, 5]
+        self.assertEqual( data, res)
+
+    def test_insert_in_range_last_1(self):
+        a = DynArray()
+        for i in range(10):
+            a.append(i)
+        a.insert(10, 999)
+        data = [a.capacity, a.__len__(), a.__getitem__(10)]
         res =  [16, 11, 999]
         self.assertEqual( data, res)
 
@@ -116,5 +126,24 @@ class main_tests(unittest.TestCase):
             a.append(i)
         self.assertRaises(IndexError, a.delete, 20)
 
-if __name__ == '__main__':
+    def test_radom(self):
+        for i in range(1000):
+            count_element = random.randint(0, 16)
+            a = DynArray()
+            a_list = []
+            for i in range(count_element):
+                a.append(i)
+            insert_index = -1
+            while not (-1 < insert_index < count_element +1):
+                insert_index = random.randint(0, 16)
+            a.insert(insert_index, 999)
+            #print(f'array size: {count_element}, insert index: {insert_index}')
+            #for i in range(count_element + 1):
+            #    a_list.append(a.__getitem__(i))
+            #print(a_list)
+            data = [a.__len__(), a.__getitem__(insert_index)]
+            res = [count_element+1, 999]
+            self.assertEqual(data, res)
+
+if __name__ == '__main__':  
     unittest.main()

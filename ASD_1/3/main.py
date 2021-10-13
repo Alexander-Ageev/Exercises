@@ -48,8 +48,7 @@ class DynArray:
                         new_array[index] = self.array[index -1]
                 self.array = new_array
             else:
-                self.array[self.count] = itm
-                for index in range(i + 1, self.count)[::-1]:
+                for index in range(i + 1, self.count+1)[::-1]:
                     self.array[index] = self.array[index - 1]
                 self.array[i] = itm
                 self.count += 1
