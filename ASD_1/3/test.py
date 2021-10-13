@@ -120,13 +120,17 @@ class main_tests(unittest.TestCase):
         res =  [21, 15, 14]
         self.assertEqual( data, res)
 
+    def test_delete_from_void(self):
+        a = DynArray()
+        self.assertRaises(IndexError, a.delete, 0)
+
     def test_delete_error(self):
         a = DynArray()
         for i in range(16):
             a.append(i)
         self.assertRaises(IndexError, a.delete, 20)
 
-    def test_radom(self):
+    def test_radom_insert(self):
         for i in range(1000):
             count_element = random.randint(0, 16)
             a = DynArray()
@@ -143,6 +147,25 @@ class main_tests(unittest.TestCase):
             #print(a_list)
             data = [a.__len__(), a.__getitem__(insert_index)]
             res = [count_element+1, 999]
+            self.assertEqual(data, res)
+
+    def test_radom_delete(self):
+        for i in range(1000):
+            count_element = random.randint(1, 16)
+            a = DynArray()
+            a_list = []
+            for i in range(count_element):
+                a.append(i)
+            delete_index = -1
+            while not (-1 < delete_index < count_element):
+                delete_index = random.randint(0, 16)
+            a.delete(delete_index)
+            #print(f'array size: {count_element}, insert index: {insert_index}')
+            #for i in range(count_element - 1):
+            #    a_list.append(a.__getitem__(i))
+            #print(a_list)
+            data = [a.__len__()]
+            res = [count_element - 1,]
             self.assertEqual(data, res)
 
 if __name__ == '__main__':  
