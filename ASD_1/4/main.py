@@ -46,8 +46,24 @@ def braket_braker(source_string):
         elif i == ')':
             if s.pop() is None:
                 return False
-    if len(s.stack) > 0:
-        return False
-    else:
-        return True
+    return not s.stack
 
+def postfix(sourse_string):
+    s1 = Stack() 
+    s2 = Stack()
+    for char in sourse_string[::-1]:
+        s1.push(char)
+    for i in range(s1.size()):
+        char = s1.pop()
+        if char.isdigit():
+            s2.push(int(char))
+        elif char == '+':                
+            d1 = s2.pop()
+            d2 = s2.pop()
+            s2.push(d1 + d2) 
+        elif char == '*':
+            d1 = s2.pop()
+            d2 = s2.pop()                
+            s2.push(d1 * d2)
+        elif char == '=':
+            return s2.stack
