@@ -22,10 +22,14 @@ class OrderedList:
         # +1 если v1 > v2
 
     def add(self, value):
+        if self.__ascending:
+            mode = 1
+        else:
+            mode = -1
         if self.head is None: # empty list
             self.head = value
         elif self.tail is None: # list.len = 1
-            if self.compare(value, self.head) == 1:
+            if self.compare(value, self.head) * mode == 1:
                 self.head.next = value
                 self.tail = value
                 self.tail.prev = self.head
@@ -36,7 +40,7 @@ class OrderedList:
         else: #list.len >= 2
             node = self.head
             while node is not None:
-                value_position =  self.compare(value, node)
+                value_position =  self.compare(value, node) * mode
                 if value_position == -1 or value_position == 0:  # value <= current_node  
                     if node == self.head:
                         self.head = value
@@ -80,6 +84,18 @@ class OrderedList:
             r.append(node)
             node = node.next
         return r
+
+    def get_list(self):
+        l = []
+        node = self.head
+        while node is not None:
+            l.append(node.value)
+            node = node.next
+        return l
+
+
+    def get_head_tail(self):
+        return [self.head, self.tail]
 
 class OrderedStringList(OrderedList):
     def __init__(self, asc):
