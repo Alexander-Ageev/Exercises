@@ -11,9 +11,9 @@ class OrderedList:
         self.__ascending = asc
 
     def compare(self, v1, v2):
-        if v1.value < v2.value:
+        if v1 < v2:
             return -1
-        elif v1.value == v2.value:
+        elif v1 == v2:
             return 0
         else:
             return 1
@@ -21,43 +21,44 @@ class OrderedList:
         # 0 если v1 == v2
         # +1 если v1 > v2
 
-    def add(self, value):
+    def add(self, item):
         if self.__ascending:
             mode = 1
         else:
             mode = -1
+        new_node = Node(item)
         if self.head is None: # empty list
-            self.head = value
+            self.head = new_node
         elif self.tail is None: # list.len = 1
-            if self.compare(value, self.head) * mode == 1:
-                self.head.next = value
-                self.tail = value
+            if self.compare(new_node.value, self.head.value) * mode == 1:
+                self.head.next = new_node
+                self.tail = new_node
                 self.tail.prev = self.head
             else:
-                self.head, self.tail = value, self.head
+                self.head, self.tail = new_node, self.head
                 self.head.next = self.tail
                 self.tail.prev = self.head
         else: #list.len >= 2
             node = self.head
             while node is not None:
-                value_position =  self.compare(value, node) * mode
+                value_position =  self.compare(new_node.value, node.value) * mode
                 if value_position == -1 or value_position == 0:  # value <= current_node  
                     if node == self.head:
-                        self.head = value
+                        self.head = new_node
                         self.head.next = node
-                        node.prev = value
+                        node.prev = new_node
                         break
                     else:
-                        node.prev.next = value
-                        value.prev = node.prev
-                        value.next = node
-                        node.prev = value
+                        node.prev.next = new_node
+                        new_node.prev = node.prev
+                        new_node.next = node
+                        node.prev = new_node
                         break
                 elif value_position == 1:
                     if node == self.tail:
-                        self.tail = value
+                        self.tail = new_node
                         self.tail.prev = node
-                        node.next = value
+                        node.next = new_node
                         break
                     else:
                         node = node.next
@@ -95,7 +96,12 @@ class OrderedList:
 
 
     def get_head_tail(self):
-        return [self.head, self.tail]
+        l = []
+        if self.head is not None:
+            l.append(self.head.value)
+        if self.tail is not None:
+            l.append(self.tail.value)
+        return l
 
 class OrderedStringList(OrderedList):
     def __init__(self, asc):
