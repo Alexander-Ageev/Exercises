@@ -196,7 +196,8 @@ class main_tests(unittest.TestCase):
         ls.add(n3)
         ls.delete(2)
         data = ls.get_head_tail() + ls.get_list()
-        res = [n3, n2, 3, 2]
+        #res = [n3, n2, 3, 2]
+        res = [n3, n3, 3]
         self.assertEqual(data, res)  
 
     def test_del_one_last_from_many(self):
@@ -210,7 +211,56 @@ class main_tests(unittest.TestCase):
         ls.delete(3)
         data = ls.get_head_tail() + ls.get_list()
         res = [n1, n2, 1, 2]
-        self.assertEqual(data, res)  
+        self.assertEqual(data, res)
+
+    def test_random_del_up(self):
+        for t in range(1000):
+            ls = OrderedList(True)
+            node_count = random.randint(0, 10)
+            l = []
+            for i in range(node_count):
+                node = random.randint(-100, 100)
+                ls.add(node)
+                l.append(node)
+            l = sorted(l)
+            del_node = random.randint(-100, 100)
+            ls.delete(del_node)
+            data = data = ls.get_head_tail() + ls.get_list()
+            try:
+                l.remove(del_node)
+            except:
+                pass
+            if l:
+                res = [l[0], l[-1]] + l
+            else:
+                res = [None, None]
+            self.assertEqual(data, res)
+
+    def test_random_del_down(self): # не работает с удалением всех элементов
+        for t in range(1000):
+            ls = OrderedList(False)
+            node_count = random.randint(0, 10)
+            l = []
+            for i in range(node_count):
+                node = random.randint(-100, 100)
+                ls.add(node)
+                l.append(node)
+            l = sorted(l, reverse=True)
+            del_node = random.randint(-100, 100)
+            print(l)
+            ls.delete(del_node)
+            data = data = ls.get_head_tail() + ls.get_list()
+            try:
+                l.remove(del_node)
+            except:
+                pass
+            if l:
+                res = [l[0], l[-1]] + l
+            else:
+                res = [None, None]
+            self.assertEqual(data, res)
+
+
 
     def test_len_void(self):
         ls = OrderedList(True)

@@ -113,7 +113,7 @@ class OrderedList:
                 else:
                     node.prev.next = node.next
                     node.next.prev = node.prev
-                    break
+#break
             node = node.next
         return 0
 
