@@ -78,6 +78,37 @@ class main_tests(unittest.TestCase):
         res =  [n1, n3, n1, n2, n3]
         self.assertEqual( data, res)
 
+    def test_add_equal_up(self):
+        l = OrderedList(True)
+        n1 = 1
+        n2 = 1
+        n3 = 1
+        sequence_list = []
+        l.add(n1)
+        sequence_list.append(l.get_index(0))
+        l.add(n2)
+        sequence_list.append(l.get_index(1))
+        l.add(n3)
+        sequence_list.append(l.get_index(2))  
+        data = l.get_all()
+        res =  sequence_list
+        self.assertEqual( data, res)
+
+    def test_add_equal_down(self):
+        l = OrderedList(False)
+        n1 = 1
+        n2 = 1
+        n3 = 1
+        sequence_list = []
+        l.add(n1)
+        sequence_list.append(l.get_index(0))
+        l.add(n2)
+        sequence_list.append(l.get_index(1))
+        l.add(n3)
+        sequence_list.append(l.get_index(2))  
+        data = l.get_all()
+        res =  sequence_list
+        self.assertEqual( data, res)
 
     def test_add_in_middle_up(self):
         l = OrderedList(True)
@@ -216,24 +247,20 @@ class main_tests(unittest.TestCase):
         ls.delete(n2)
         data = ls.get_head_tail() + ls.get_list()
         res = [n3, n1, n3, n1]
-        self.assertEqual(data, res)  
+        self.assertEqual(data, res)
 
-def test_del_one_middle_from_many_up(self):
+    def test_del_one_middle_from_many_up(self):
         n1 = 2
         n2 = 2
         n3 = 3        
-        ls = OrderedList(False)
+        ls = OrderedList(True)
         ls.add(n1)
         ls.add(n2)
         ls.add(n3)
-        print(ls.get_all())
         ls.delete(n2)
-        print(ls.get_all())
         data = ls.get_head_tail() + ls.get_list()
         res = [n2, n3, n2, n3]
-        #res = [n3, n3, 3]
         self.assertEqual(data, res)  
-
 
     def test_del_one_middle_from_many_down(self):
         n1 = 2
@@ -243,16 +270,11 @@ def test_del_one_middle_from_many_up(self):
         ls.add(n1)
         ls.add(n2)
         ls.add(n3)
-        print(ls.get_all())
         ls.delete(n2)
-        print(ls.get_all())
         data = ls.get_head_tail() + ls.get_list()
         res = [n3, n2, n3, n2]
-        #res = [n3, n3, 3]
         self.assertEqual(data, res)  
 
-
-"""
     def test_del_one_last_from_many(self):
         n1 = 1
         n2 = 2
@@ -395,9 +417,5 @@ def test_del_one_middle_from_many_up(self):
             except:
                 res = None
             self.assertEqual(data, res)  
-
-"""
-
-
 if __name__ == '__main__':
     unittest.main()
