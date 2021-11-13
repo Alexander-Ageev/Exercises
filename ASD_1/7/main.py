@@ -27,11 +27,11 @@ class OrderedList:
     def add(self, item):
         """
         Add item in ordered list.
-        
+
         Parameters:
         item - value of add item
         """
-        
+
         if self.__ascending:
             mode = 1
         else:
@@ -53,7 +53,7 @@ class OrderedList:
             node = self.head
             while node is not None:
                 value_position = self.compare(new_node.value, node.value) * mode
-                if value_position == -1:  # new_node < current_node /тут ошибка
+                if value_position == -1:  # new_node < current_node
                     if node == self.head:
                         self.head = new_node
                         self.head.next = node
