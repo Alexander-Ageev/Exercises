@@ -6,7 +6,7 @@ class HashTable:
 
     def hash_fun(self, value: str):
         """Return slot number based on hash_function"""
-        slot_number = sum(bytes(value, encoding = 'utf-8')) % self.size 
+        slot_number = sum(bytes(value, encoding='utf-8')) % self.size
         return slot_number
 
     def seek_slot(self, value):
