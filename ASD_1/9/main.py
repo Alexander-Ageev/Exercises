@@ -12,7 +12,7 @@ class NativeDictionary:
     def is_key(self, key):
         """Return True if key exist"""
         index = self.hash_fun(key)
-        return False if self.slots[index] is None else True
+        return True if self.slots[index] == key else False
 
     def put(self, key, value):
         """Put value in HashTable[index] and return index or return None if HashTable is full"""

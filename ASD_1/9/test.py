@@ -39,6 +39,13 @@ class main_tests(unittest.TestCase):
         res = 100
         self.assertEqual(data, res)
 
+    def test_is_key_wrong_key(self):
+        H = NativeDictionary(11)
+        H.put('m', 10)
+        data = H.is_key('x')
+        res = False
+        self.assertEqual(data, res)
+
     def test_get_none(self):
         H = NativeDictionary(11)
         H.put('x', 10)
