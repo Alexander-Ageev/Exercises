@@ -9,7 +9,7 @@ class main_tests(unittest.TestCase):
         res = 0
         self.assertEqual(data, res)
     
-    def test_hash_fun_0(self):
+    def test_hash_fun_1(self):
         H = HashTable(11, 2)
         input_str = 'x'
         data = H.hash_fun(input_str)
@@ -111,12 +111,6 @@ class main_tests(unittest.TestCase):
             data = put_char_list
             res = find_char_list
             self.assertEqual(data, res)
-
-
-
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
