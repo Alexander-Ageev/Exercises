@@ -41,12 +41,13 @@ class PowerSet():
         """Возвращает объединение исходного множества с параметром set2"""
         res = PowerSet()
         values = sorted(self.list_value() + set2.list_value())
-        prev = values[0]
-        res.put(prev)
-        for i in range(1, len(values)):
-            if prev != values[i]:
-                res.slots.append(values[i])
-            prev = values[i]
+        if len(values) > 0:
+            prev = values[0]
+            res.put(prev)
+            for i in range(1, len(values)):
+                if prev != values[i]:
+                    res.slots.append(values[i])
+                prev = values[i]
         return res
 
     def difference(self, set2):

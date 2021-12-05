@@ -92,7 +92,22 @@ class main_tests(unittest.TestCase):
         res = sorted(list(a & b))
         self.assertEqual(data, res)
 
-    def test_union_void(self):
+
+    def test_intersection_booth_void(self):
+        set1 = PowerSet()
+        set2 = PowerSet()
+        data = sorted(set1.intersection(set2).list_value())
+        res = []
+        self.assertEqual(data, res)
+
+    def test_union_booth_void(self):
+        set1 = PowerSet()
+        set2 = PowerSet()
+        data = sorted(set1.union(set2).list_value())
+        res = []
+        self.assertEqual(data, res)
+
+    def test_union_one_void(self):
         set1 = PowerSet()
         set2 = PowerSet()
         set2.put('0')
@@ -131,6 +146,13 @@ class main_tests(unittest.TestCase):
         set2.put('D')
         data = sorted(set1.difference(set2).list_value())
         res = sorted([])
+        self.assertEqual(data, res)
+
+    def test_difference_booth_void(self):
+        set1 = PowerSet()
+        set2 = PowerSet()
+        data = sorted(set1.difference(set2).list_value())
+        res = []
         self.assertEqual(data, res)
 
     def test_difference_random(self):
