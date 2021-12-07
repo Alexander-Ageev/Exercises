@@ -52,7 +52,6 @@ class main_tests(unittest.TestCase):
         b = BloomFilter(32)
         str1 = '6791082435'
         b.add(str1)
-        print(b.hash1(str1), b.hash2(str1))
         data = b.is_value('0123456789')
         res =  True
         self.assertEqual(data, res)
