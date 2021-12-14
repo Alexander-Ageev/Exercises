@@ -20,9 +20,12 @@ class main_tests(unittest.TestCase):
             get_list[p]+=1
         Johny.put(101, 101)       
         index = get_list.index(min(get_list))
-        get_list[index] = 101
-        data = Johny.get(101)
-        res = 101
+        res_list = [i for i in range(100)]
+        res_list[index] = 101
+        data = Johny.get_list_values()
+        res = res_list
         self.assertEqual(data, res)
+
+    
 if __name__ == '__main__':
     unittest.main()
