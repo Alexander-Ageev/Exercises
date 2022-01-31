@@ -1,0 +1,41 @@
+- Categories – категории товаров с подробным содержанием этих категорий;
+связь с таблицей Products по ключу CategoryID (один-ко многим)
+
+- Contacts – контакты клиентов/заказчиков, сотрудников и поставщиков;
+связь с таблицами Suppliers, Customers, Emploees и Shippers по типу контакта (один-к-одному)
+
+- Customers – данные о клиентах/заказчиках;
+связь с таблицей Orders по ключу CustomerID (один-ко-многим)
+
+- Employees – данные о сотрудниках;
+связь с таблицей EmployeeTerritories по ключу EmployeeID (один-ко-многим)
+
+- Products – данные о товарах;
+связь с таблицей OrderDetails по ключу ProductID (многие-ко-многим)
+связь с таблицей Suppliers по ключу SupplierID (один-ко-многим)
+связь с таблицей Categories по ключу CategoryID (один-ко многим)
+
+- Suppliers – данные о поставщиках;
+связь с таблицей Products по ключу SupplierID (один-ко-многим)
+
+- Shippers – Данные о доставщиках (службах доставки, грузоотправителях);
+связь с таблицей Orders по ключу ShippersID/ShipVIA (один-ко-многим)
+
+- Region – данные о регионах;
+связь с таблицей Territories по ключу RegionID (один-ко-многим)
+
+- Territories – данные о территориальных единицах регионов, городах;
+связь с таблицей Regions по ключу RegionID (один-ко-многим)
+связь с таблицей EmployeeTerritories по ключу TerritoryID (один-ко-многим)
+
+- Orders – данные о заказах;
+связь с таблицей OrderDetails по ключу OrderID (один-к-одному)
+связь с таблицами Customers, Employees, Shippers по соответствующим ключам (один-ко-многим)
+
+- Order Details – детали заказов;
+связь с таблицей Order по ключу OrderID (один-к-одному)
+связь с таблицей Products по ключу ProductID (многие-ко-многим)
+
+- EmployeeTerritories - какой сотрудник к какой территории прикреплён.
+связь с таблицей Territories по ключу TerritoryID (один-ко-многим)
+связь с таблицей Employee по ключу EmployeeID (один-ко-многим)

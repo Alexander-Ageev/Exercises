@@ -1,0 +1,18 @@
+11.5.1. Отберите с помощью LEFT JOIN все записи из таблицы Customers, для которых FK-ключ таблицы Orders пустой.
+SELECT *
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Orders.CustomerID is NULL
+
+11.5.2. Выведите конкретную информацию по всем пользователям Customers и поставщикам Suppliers -- имя контактной персоны, город и страну, а также идентификацию группы (пользователь или поставщик).
+
+SELECT ContactName, City, Country, 'Customers' as ContactType
+FROM Customers
+UNION
+SELECT ContactName, City, Country, 'Suppliers' as ContactType
+FROM Suppliers
+
+
+SELECT ContactName, City, Country, ContactType
+FROM Contacts
+WHERE ContactType IN ('Supplier', 'Customer')

@@ -1,0 +1,29 @@
+CREATE DATABASE [Best database]
+
+CREATE TABLE Regions(
+	RegionID int IDENTITY(1, 1) PRIMARY KEY,
+	Description nchar(50) NOT NULL
+)
+
+CREATE TABLE Territories(
+	TerritoryID int IDENTITY(1, 1) PRIMARY KEY,
+	Description nchar(50) NOT NULL,
+	RegionID int FOREIGN KEY REFERENCES Regions (RegionID)
+)
+
+INSERT INTO Regions (Description)
+VALUES('North')
+INSERT INTO Regions (Description)
+VALUES('East')
+INSERT INTO Regions (Description)
+VALUES('South')
+INSERT INTO Regions (Description)
+VALUES('West')
+
+
+*Индекс был создан и проинициализирован при создании таблицы. Этот индекс создан для демонстрации. 
+INSERT INTO Territories (Description, RegionID)
+VALUES ('Vladivostok', 2)
+
+
+CREATE INDEX idxTerritoryDescription ON Territories(Description)

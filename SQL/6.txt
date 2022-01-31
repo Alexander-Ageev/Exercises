@@ -1,0 +1,11 @@
+6.3.1. Выполните агрегацию таблицы Contacts по полю ContactType.
+SELECT ContactType, COUNT(ContactType) 
+FROM Contacts 
+WHERE ContactType IS NOT NULL
+GROUP BY ContactType
+
+6.3.2. Выведите средние цены товаров (UnitPrice) в каждой из категорий (CategoryId) таблицы Products, отсортированные по возрастанию.
+SELECT CategoryId, AVG(UnitPrice) as 'AVG Price'
+FROM Products
+GROUP BY CategoryID
+ORDER BY 'AVG Price'

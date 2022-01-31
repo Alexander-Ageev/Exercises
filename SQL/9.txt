@@ -1,0 +1,23 @@
+9.4.1. Найдите все пары из разных заказчиков (Customers), для которых не задан регион (поле Region).
+SELECT c1.CompanyName, c2.CompanyName
+FROM Customers c1, Customers c2
+WHERE c1.Region is NULL
+AND c2.Region is NULL
+AND c1.CompanyName <> c2.CompanyName
+ORDER BY c1.CompanyName
+
+9.4.2. Найдите вложенным запросом список заказов (Orders), в котором у заказчиков (Customers) регион не пуст (поле Region).
+SELECT *
+FROM Orders
+WHERE CustomerID = ANY 
+ (SELECT CustomerID
+ FROM Customers
+ WHERE Region is not NULL)
+ORDER BY CustomerID
+
+9.4.3. Немного условный, но показательный пример. Найдите все заказы (таблица Orders), цена за доставку товара которых (Freight) превышает цену любого товара (поле UnitPrice, таблица Products).
+SELECT *
+FROM Orders
+WHERE Freight > ALL
+ (SELECT UnitPrice
+ FROM Products)

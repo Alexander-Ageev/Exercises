@@ -1,0 +1,16 @@
+12.3.1. Добавьте нового пользователя в таблицу Employees.
+
+INSERT INTO Employees (LastName, FirstName, City)
+VALUES ('Stalin', 'Josef', 'Gory')
+
+12.3.2. Свяжите этого нового пользователя с какой-либо территорией с помощью таблицы EmployeeTerritories (многие-ко-многим).
+
+INSERT INTO EmployeeTerritories(EmployeeID, TerritoryID)
+VALUES (13, 94105)
+
+12.3.3. Попробуйте добавить новую запись в таблицу заказов Orders. Возникнут ли какие-либо конфликты?
+
+INSERT INTO Orders (CustomerID, EmployeeID, ShipCountry)
+VALUES ('SEVES', 13, 'USSR')
+
+Конфликтов не возникло. Заполнены поля (CustomerID, EmployseID), являющиеся FK теми значениями, которые содержатся в БД.
