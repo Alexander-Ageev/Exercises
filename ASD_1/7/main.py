@@ -27,11 +27,11 @@ class OrderedList:
     def add(self, item):
         """
         Add item in ordered list.
-        
+
         Parameters:
         item - value of add item
         """
-        
+
         if self.__ascending:
             mode = 1
         else:
@@ -41,19 +41,19 @@ class OrderedList:
             self.head = new_node
             self.tail = new_node
         elif self.head == self.tail: # list.len = 1
-            if self.compare(new_node.value, self.head.value) * mode == 1:
-                self.tail = new_node
-                self.head.next = new_node
-                self.tail.prev = self.head
-            else:
+            if self.compare(new_node.value, self.head.value) * mode == -1: # new_node < head
                 self.head, self.tail = new_node, self.head
                 self.head.next = self.tail
+                self.tail.prev = self.head
+            else:
+                self.tail = new_node
+                self.head.next = new_node
                 self.tail.prev = self.head
         else: #list.len >= 2
             node = self.head
             while node is not None:
                 value_position = self.compare(new_node.value, node.value) * mode
-                if value_position in (-1, 0):  # value <= current_node
+                if value_position == -1:  # new_node < current_node
                     if node == self.head:
                         self.head = new_node
                         self.head.next = node
@@ -65,7 +65,7 @@ class OrderedList:
                         new_node.next = node
                         node.prev = new_node
                         break
-                elif value_position == 1:
+                elif value_position >= 0:
                     if node == self.tail:
                         self.tail = new_node
                         self.tail.prev = node
