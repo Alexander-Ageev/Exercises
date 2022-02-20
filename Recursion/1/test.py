@@ -1,27 +1,30 @@
 import unittest
 from main import power
 
-class main_tests(unittest.TestCase):
+class MainTests(unittest.TestCase):
     def test_positive_power(self):
-        n = 2
-        m = 7
-        data = power(n, m)
-        res = n**m
+        """Test for a positive degree"""
+        number = 2
+        degree = 7
+        data = power(number, degree)
+        res = number**degree
         self.assertEqual( data, res)
 
     def test_null_power(self):
-        n = 2
-        m = 0
-        data = power(n, m)
-        res = n**m
+        """Test for a null degree"""
+        number = 2
+        degree = 0
+        data = power(number, degree)
+        res = number**degree
         self.assertEqual( data, res)
 
     def test_negative_power(self):
-        n = 2
-        m = -5
-        data = power(n, m)
-        res = n**m
+        """Test for a negative degree"""
+        number = 2
+        degree = -5
+        data = power(number, degree)
+        res = number**degree
         self.assertEqual( data, res)
 
-if __name__ == '__main__':  
+if __name__ == '__main__':
     unittest.main()
