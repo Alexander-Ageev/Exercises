@@ -8,7 +8,7 @@ def get_len(number: int):
     return length
 
 def get_digit(number: int, length: int):
-    """Return first digit of number"""
+    """Convert number to digits. Return sum of digit"""
     if length <= 1:
         return number
     else:
@@ -18,7 +18,7 @@ def get_digit(number: int, length: int):
         return digit + get_digit(remainder, length -1)
 
 def dig_sum(number: int):
-    """Return sum """
+    """Return sum of digits"""
     number = abs(number)
     length = get_len(number)
     return get_digit(number, length)
