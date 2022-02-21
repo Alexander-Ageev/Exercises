@@ -1,24 +1,12 @@
 # Вычисление суммы цифр числа
 
-def get_len(number: int):
-    """Return length of number"""
-    length = 1
-    while number/10**length >= 1:
-        length += 1
-    return length
-
-def get_digit(number: int, length: int):
-    """Convert number to digits. Return sum of digit"""
-    if length <= 1:
-        return number
-    else:
-        base = 10**(length-1)
-        remainder = number % base
-        digit = number // base
-        return digit + get_digit(remainder, length -1)
-
-def dig_sum(number: int):
+def dig_sum(number):
     """Return sum of digits"""
-    number = abs(number)
-    length = get_len(number)
-    return get_digit(number, length)
+    if number < 0:
+        number = abs(number)
+    if number > 9:
+        dig = number % 10
+        rem = number // 10
+        return dig + dig_sum(rem)
+    else:
+        return number
