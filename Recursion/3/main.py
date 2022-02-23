@@ -5,8 +5,8 @@
 
 def get_len(data:list):
     '''Return length of list'''
-    try:
+    if data != []:
         data.pop(0)
         return 1 + get_len(data)
-    except ValueError:
+    else:
         return 0
