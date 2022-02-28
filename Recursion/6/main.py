@@ -9,6 +9,5 @@ def into_deep (data: list, res: list):
     """Return data even indexes"""
     if data == []:
         return res
-    else:
-        res.append(data[0])
-        return into_deep(data[2:], res)
+    res.append(data[0])
+    return into_deep(data[2:], res)
