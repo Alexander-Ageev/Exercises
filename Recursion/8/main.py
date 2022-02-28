@@ -13,8 +13,8 @@ def into_dir(root: str, files: list):
     """Return filenames in the directory"""
     data = os.listdir(root)
     for i in data:
-        if os.path.isfile(root + '/' + i):
+        if os.path.isfile(root + os.path.sep + i):
             files.append(i)
         else:
-            files = into_dir(root + '/' + i, files)
+            files = into_dir(root + os.path.sep + i, files)
     return files
