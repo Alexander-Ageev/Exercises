@@ -50,8 +50,5 @@ class MainTest(unittest.TestCase):
         res = None
         self.assertEqual(sort_max_search(data), res)
 
-
-
-
 if __name__ == '__main__':
     unittest.main()
