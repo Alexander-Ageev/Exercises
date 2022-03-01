@@ -4,7 +4,7 @@
 """
 
 def linear_max_search(data: list):
-    """Return second max value"""
+    """Return second max value. Loop version"""
     if len(data) < 2:
         return None
     big = max(data[0:2]) # max value
@@ -16,3 +16,10 @@ def linear_max_search(data: list):
         elif big >= i > low:
             low = i
     return low
+
+def sort_max_search(data: list):
+    """Return second max value. Sort version"""
+    if len(data) < 2:
+        return None
+    data.sort()
+    return data[-2]
