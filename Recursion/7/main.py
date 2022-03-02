@@ -17,22 +17,14 @@ def linear_max_search(data: list):
             low = i
     return low
 
-def sort_max_search(data: list):
-    """Return second max value. Sort version"""
-    if len(data) < 2:
-        return None
-    data.sort()
-    return data[-2]
-
 def max_search(data: list):
     """Return second max value. Clear version"""
-    low = None
     big = None
-    i = 0
-    while data != []:
-        if data[i] > big:
+    low = None
+    for i in data:
+        if big is None or i > big:
             low = big
-            big = data[i]
-        elif big >= i > low:
+            big = i
+        elif low is None or big >= i > low:
             low = i
     return low
