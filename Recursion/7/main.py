@@ -28,3 +28,18 @@ def max_search(data: list):
         elif low is None or big >= i > low:
             low = i
     return low
+
+def rec_max_search(data: list):
+    """Init"""
+    big_low = [None, None]
+    return loop_it(data, big_low)[1]
+
+def loop_it(data:list, big_low: list):
+    """Return second max value. Recursion version"""
+    if data == []:
+        return big_low
+    if big_low[0] is None or big_low[0] < data[0]:
+        big_low = [data[0], big_low[0]]
+    elif big_low[1] is None or big_low[1] < data[0] <= big_low[0]:
+        big_low[1] = data[0]
+    return loop_it(data[1:], big_low)
