@@ -23,3 +23,16 @@ def sort_max_search(data: list):
         return None
     data.sort()
     return data[-2]
+
+def max_search(data: list):
+    """Return second max value. Clear version"""
+    low = None
+    big = None
+    i = 0
+    while data != []:
+        if data[i] > big:
+            low = big
+            big = data[i]
+        elif big >= i > low:
+            low = i
+    return low
