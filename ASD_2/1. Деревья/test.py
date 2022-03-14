@@ -72,5 +72,11 @@ class MainTest(unittest.TestCase):
         res = [9, 4]
         self.assertEqual(data, res)
 
+    def test_set_level(self):
+        self.tree.SetLevel()
+        data = self.tree.GetLevel()
+        res = [(0, 9), (1, 4), (1, 17), (2, 3), (2, 6), (2, 22), (3, 5), (3, 7), (3, 20)]
+        self.assertEqual(data, res)
+
 if __name__ == '__main__':
     unittest.main()

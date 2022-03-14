@@ -8,6 +8,7 @@ class SimpleTreeNode:
         self.node_value = val # значение в узле
         self.parent = parent # родитель или None для корня
         self.children = [] # список дочерних узлов
+        self.level = -1
 
 class SimpleTree:
     """
@@ -24,11 +25,11 @@ class SimpleTree:
         """Инициализация дерева"""
         self.root = root # корень, может быть None
 
-    def __Getchildrens__(self, roots: list, nodes: list):
+    def __GetChildrens__(self, roots: list, nodes: list):
         """Возвращает список всех узлов, начиная с roots"""
         for i in roots:
             nodes.append(i)
-            self.__Getchildrens__(i.children, nodes)
+            self.__GetChildrens__(i.children, nodes)
         return nodes
 
     def __FindValues__(self, roots: list, nodes: list, value):
@@ -40,16 +41,31 @@ class SimpleTree:
         return nodes
 
     def __FindLeaf__(self, roots: list, nodes: list):
+        """Возвращает список всех листьев"""
         for i in roots:
             if i.children == []:
                 nodes.append(i)
             self.__FindLeaf__(i.children, nodes)
         return nodes
 
+    def __SetLevel__(self, roots: list, level):
+        """Устанавливает уровень каждому узлу дерева"""
+        for i in roots:
+            i.level = level
+            self.__SetLevel__(i.children, level+1)
+
+    def __GetLevel__(self, roots: list, nodes: list):
+        """Возвращает список (level, node_value), начиная с roots"""
+        for i in roots:
+            nodes.append((i.level, i.node_value))
+            self.__GetLevel__(i.children, nodes)
+        return nodes
+
     def AddChild(self, parent_node: SimpleTreeNode, new_child: SimpleTreeNode):
         """Добавляет дочерний узел к parent_node"""
-        parent_node.children.append(new_child)
-        new_child.parent = parent_node
+        if parent_node is not None:
+            parent_node.children.append(new_child)
+            new_child.parent = parent_node
         return 0
 
     def DeleteNode(self, node_to_delete):
@@ -62,8 +78,7 @@ class SimpleTree:
 
     def GetAllNodes(self):
         """Возвращает список всех узлов дерева"""
-        nodes = []
-        return self.__Getchildrens__([self.root], nodes)
+        return self.__GetChildrens__([self.root], [])
 
     def GetNodesValues(self, nodes):
         """Возвращает список значений всех узлов дерева"""
@@ -72,8 +87,7 @@ class SimpleTree:
 
     def FindNodesByValue(self, val):
         """Возвращает список узлов с заданным значением val"""
-        nodes = []
-        return self.__FindValues__([self.root], nodes, val)
+        return self.__FindValues__([self.root], [], val)
 
     def MoveNode(self, original_node, new_parent):
         """Перемещает узел original_node вместе с его дочерними ветвями к родителю new_parent"""
@@ -91,3 +105,15 @@ class SimpleTree:
     def LeafCount(self):
         """Возвращает количество всех листьев в дереве"""
         return len(self.__FindLeaf__([self.root], []))
+
+    def SetLevel(self):
+        """Инициализация __SetLevel__"""
+        level = 0
+        self.__SetLevel__([self.root], level)
+        return 0
+
+    def GetLevel(self):
+        """Инициализация __GetLevel__"""
+        res = self.__GetLevel__([self.root], [])
+        res.sort()
+        return res
