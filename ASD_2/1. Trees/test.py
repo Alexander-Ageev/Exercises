@@ -50,7 +50,7 @@ class MainTest(unittest.TestCase):
 
     def test_find_value(self):
         """Проверка на корректность поиска всех узлов по значению"""
-        self.aab.node_value = 17
+        self.aab.NodeValue = 17
         nodes = self.tree.FindNodesByValue(17) 
         data = self.tree.GetNodesValues(nodes)
         res = [17, 17]
