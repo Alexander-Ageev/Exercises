@@ -13,10 +13,14 @@ class BSTNode:
 class BSTFind: # промежуточный результат поиска
 
     def __init__(self):
-        """Создает объект с информацией о результатах поиска"""
-        self.Node = None # None если 
-        # в дереве вообще нету узлов
-
+        """
+        Создает объект с информацией о результатах поиска
+        self.Node = None - если в дереве нет узлов
+        self.NodeHasKey = False - если узел не найден
+        self.ToLeft = True - если родительскому узлу надо 
+        добавить новый узел левым потомком    
+        """
+        self.Node = None # None если в дереве вообще нету узлов
         self.NodeHasKey = False # True если узел найден
         self.ToLeft = False # True, если родительскому узлу надо 
         # добавить новый узел левым потомком
@@ -73,8 +77,30 @@ class BST:
             return self.FinMinMax(FromNode.LeftChild, FindMax)
         return FromNode
 	
+    def __IsLeaf__(node: BSTNode):
+        """Возвращает True, если узел является листом"""
+        no_child = node.LeftChild is None and node.RightChild is None
+        return True if no_child else False
+
     def DeleteNodeByKey(self, key):
-        # удаляем узел по ключу
+        node = self.FindNodeByKey(key).Node# удаляем узел по ключу
+        if node.LeftChild is not None and node.RightChild is not None:
+            rep_node = self.FinMinMax(node.RightChild, False)
+            if self.__IsLeaf__(rep_node):
+                rep_node.Parent.LeftChild = None
+            else:
+                rep_node.Parent.LeftChild = rep_node.RightChild
+                rep_node.RightChild.Parent = rep_node.Parent
+            rep_node.Parent = node.Parent
+            rep_node.LeftChild = node.LeftChild
+            rep_node.RightChild = node.RightChild
+        elif node.LeftChild is not None:
+            if node.LeftChild.NodeValue > node.Parent.NodeValue:
+                node.Parent.RightChild = node.LeftChild
+                node.LeftChild.Parent = node.Parent
+                
+        elif node.RightChild is not None:
+
         return False # если узел не найден
 
     def Count(self):

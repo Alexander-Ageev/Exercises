@@ -1,11 +1,14 @@
 import unittest
 from main import BSTNode, BST
 
+ELEMENTS_COUNT = 15
+ROOT = 8
+
 class MainTest(unittest.TestCase):
     def setUp(self) -> None:
         """Автоматическая генерация тестового дерева. Проверка метода AddKeyValue"""
-        nodes = list(range(1, 16))
-        root = BSTNode(8, 8, None)
+        nodes = [4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
+        root = BSTNode(ROOT, ROOT, None)
         tree = BST(root)
         for i in nodes:
             tree.AddKeyValue(i, i)
@@ -13,19 +16,23 @@ class MainTest(unittest.TestCase):
         self.tree = tree
 
     def test_tree(self):
+        """Проверка структуры тестового дерева"""
         res = []
-        for i in range(1, 16):
+        for i in range(1, ELEMENTS_COUNT+1):
             node = self.tree.FindNodeByKey(i).Node
-            if node.LeftChild is not None:
-                res.append(node.LeftChild.NodeValue)
+            if node.LeftChild is None:
+                lChild = None
             else:
-                res.append(None)
-            if node.RightChild is not None:
-                res.append(node.RightChild.NodeValue)
+                lChild = node.LeftChild.NodeValue
+            if node.RightChild is None:
+                rChild = None
             else:
-                res.append(None)
+                rChild = node.RightChild.NodeValue
+            res.append(lChild)
+            res.append(rChild)         
         data = [None, None, 1, 3, None, None, 2, 6, None, None, 5, 7, None, None, 4, 12, None, None,
         9, 11, None, None, 10, 14, None, None, 13, 15, None, None]
+        #data = [None, None, 1, 3, None, None]
         self.assertEqual(data, res)
 
     def test_find_exist_key(self):
