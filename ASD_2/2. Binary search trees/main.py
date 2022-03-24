@@ -1,5 +1,8 @@
 """Модуль содержит реализацию типа данных БИНАРНОЕ ДЕРЕВО ПОИСКА"""
 
+from platform import node
+
+
 class BSTNode:
     """Класс описывает узел бинарного дерева поиска"""
     def __init__(self, key, val, parent):
@@ -77,31 +80,75 @@ class BST:
             return self.FinMinMax(FromNode.LeftChild, FindMax)
         return FromNode
 	
-    def __IsLeaf__(node: BSTNode):
+    def __IsLeaf__(self, node: BSTNode):
         """Возвращает True, если узел является листом"""
         no_child = node.LeftChild is None and node.RightChild is None
         return True if no_child else False
 
-    def DeleteNodeByKey(self, key):
-        node = self.FindNodeByKey(key).Node# удаляем узел по ключу
+    def DeleteNodeByKey1(self, key):
+        node_info = self.FindNodeByKey(key)# удаляем узел по ключу
+        node = node_info.Node
+        if node_info.NodeHasKey == False:
+            return False
+        if node is self.Root:
+            return False
+        #Случай, когда узел имеет два дочерних узла
         if node.LeftChild is not None and node.RightChild is not None:
-            rep_node = self.FinMinMax(node.RightChild, False)
-            if self.__IsLeaf__(rep_node):
-                rep_node.Parent.LeftChild = None
+            replace_node = self.FinMinMax(node.RightChild, False)
+            if self.__IsLeaf__(replace_node):
+                replace_node.Parent.LeftChild = None
             else:
-                rep_node.Parent.LeftChild = rep_node.RightChild
-                rep_node.RightChild.Parent = rep_node.Parent
-            rep_node.Parent = node.Parent
-            rep_node.LeftChild = node.LeftChild
-            rep_node.RightChild = node.RightChild
+                replace_node.Parent.LeftChild = replace_node.RightChild
+                replace_node.RightChild.Parent = replace_node.Parent
+            if node.NodeValue > node.Parent.NodeValue:
+                node.Parent.RightChild = node.LeftChild
+            else:
+                node.Parent.LeftChild = node.LeftChild
+            replace_node.Parent = node.Parent
+            #node.Parent = None
+            replace_node.LeftChild = node.LeftChild
+            #node.LeftChild = None
+            replace_node.RightChild = node.RightChild
+            #node.RightChild = None
+        #Если удаляемый узел имеет дочерний узел слева
         elif node.LeftChild is not None:
             if node.LeftChild.NodeValue > node.Parent.NodeValue:
                 node.Parent.RightChild = node.LeftChild
-                node.LeftChild.Parent = node.Parent
-                
+            else:
+                node.Parent.LeftChild = node.LeftChild
+            node.LeftChild.Parent = node.Parent
+        #Если удаляемый узел имеет дочерний узел справа
         elif node.RightChild is not None:
+            if node.RightChild.NodeValue > node.Parent.NodeValue:
+                node.Parent.RightChild = node.RightChild
+            else:
+                node.Parent.LeftChild = node.RightChild
+            node.RightChild.Parent = node.Parent
+        #Если удаляемый узел является листом
+        elif self.__IsLeaf__(node):
+            if node.NodeValue > node.Parent.NodeValue:
+                node.Parent.RightChild = None
+            else:
+                node.Parent.LeftChild = None
+        node.Parent = None
+        node.LeftChild = None
+        node.RightChild = None
+        return True # если узел удален
 
-        return False # если узел не найден
+    def __node_screening__(self, current_nodes: list, nodes: list):
+        for node in current_nodes:
+            if node is not None:
+                nodes.append(node)
+                nodes = self.__node_screening__([node.LeftChild, node.RightChild], nodes)
+        return nodes
 
     def Count(self):
-        return 0 # количество узлов в дереве
+        count = len(self.__node_screening__([self.Root], [])) # количество узлов в дереве)
+        return count
+
+    def ListNodes(self):
+        nodes = self.__node_screening__([self.Root], [])
+        res = []
+        for i in nodes:
+            res.append(i.NodeValue)
+        return res
