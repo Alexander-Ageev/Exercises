@@ -1,5 +1,6 @@
 """Тесты для модуля, описывающего бинарное дерево поиска"""
 import unittest
+import random
 from main import BSTNode, BST
 
 NODES = [4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
@@ -103,9 +104,11 @@ class MainTest(unittest.TestCase):
         self.assertEqual(res, data)
 
     def test_del_root(self):
-        """Проверка невозможности удаления коревого узла"""
-        res = self.tree.DeleteNodeByKey(8)
-        data = False
+        """Проверка удаления коревого узла"""
+        node9 = self.tree.FindNodeByKey(9).Node
+        self.tree.DeleteNodeByKey(8)
+        res = (self.tree.Root, self.tree.ListNodes(), self.tree.Count())
+        data = (node9, [9, 4, 2, 1, 3, 6, 5, 7, 12, 10, 11, 14, 13, 15], 14)
         self.assertEqual(res, data)
 
     def test_del_left_leaf(self):
@@ -150,6 +153,17 @@ class MainTest(unittest.TestCase):
         node8 = self.tree.FindNodeByKey(8).Node
         res = (node8.LeftChild.NodeValue, self.tree.ListNodes(), self.tree.Count())
         data = (6, [8, 6, 2, 1, 3, 7, 12, 10, 9, 11, 14, 13, 15], 13)
+        self.assertEqual(res, data)
+
+    def test_del_all_nodes(self):
+        """Проверка на удаление всех узлов дерева"""
+        shuffle_nodes = NODES[:]
+        random.shuffle(shuffle_nodes)
+        for node in shuffle_nodes:
+            self.tree.DeleteNodeByKey(node)
+        self.tree.DeleteNodeByKey(ROOT)
+        res = self.tree.ListNodes()
+        data = []
         self.assertEqual(res, data)
 
 if __name__ == "__main__":

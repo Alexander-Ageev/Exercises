@@ -82,16 +82,19 @@ class BST:
         Метод заменяет все взаимные связи как в узле-родителе, так и в узле-потомке.
         Для удаления листа нужно подать агрумент new_node = None
         """
-        if node.NodeKey == node.Parent.NodeKey:
-            return False
-        if node.NodeKey > node.Parent.NodeKey:
-            node.Parent.RightChild = new_node
-        if node.NodeKey < node.Parent.NodeKey:
+        if node.Parent is None:
+            self.Root = new_node
+        elif node is node.Parent.LeftChild:
             node.Parent.LeftChild = new_node
+        elif node is node.Parent.RightChild:
+            node.Parent.RightChild = new_node
         if new_node is not None:
             new_node.Parent = node.Parent
             new_node.LeftChild = node.LeftChild
             new_node.RightChild = node.RightChild
+            node_childs = self._GetChilds_(new_node)
+            for i in node_childs:
+                i.Parent = new_node
         return True
 
     def _ClearLink_(self, node: BSTNode):
@@ -121,12 +124,13 @@ class BST:
         node_childs = self._GetChilds_(node)
         if node_info.NodeHasKey is False:
             return False
-        if node is self.Root:
-            return False
+        #if node is self.Root and len(node_childs) > 0:
+        #    return False
         if len(node_childs) == 0:
             replacement_node = None
         elif len(node_childs) == 1:
             replacement_node = node_childs[0]
+            self._ReplaceNode_(replacement_node, None)
         elif len(node_childs) == 2:
             replacement_node = self.FinMinMax(node.RightChild, False)
             temp_childs = self._GetChilds_(replacement_node)
@@ -150,10 +154,26 @@ class BST:
                 nodes = self._NodeScreening_([node.LeftChild, node.RightChild], nodes)
         return nodes
 
-    def ListNodes(self):
+    def ListNodes(self, mode = False):
         """Возвращает список значений всех узлов в дереве"""
         nodes = self._NodeScreening_([self.Root], [])
         res = []
         for i in nodes:
-            res.append(i.NodeValue)
+            if not mode:
+                data = i.NodeValue
+            else:
+                if i.Parent is None:
+                    parent = None
+                else:
+                    parent = i.Parent.NodeValue
+                if i.LeftChild is None:
+                    left_child = None
+                else:
+                    left_child = i.LeftChild.NodeValue
+                if i.RightChild is None:
+                    right_child = None
+                else:
+                    right_child = i.RightChild.NodeValue
+                data = (parent, i.NodeValue, left_child, right_child)
+            res.append(data)
         return res
