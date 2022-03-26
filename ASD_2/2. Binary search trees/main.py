@@ -1,8 +1,5 @@
 """Модуль содержит реализацию типа данных БИНАРНОЕ ДЕРЕВО ПОИСКА"""
 
-from platform import node
-
-
 class BSTNode:
     """Класс описывает узел бинарного дерева поиска"""
     def __init__(self, key, val, parent):
@@ -12,22 +9,20 @@ class BSTNode:
         self.LeftChild = None # левый потомок
         self.RightChild = None # правый потомок
 
-
 class BSTFind: # промежуточный результат поиска
-
+    """Класс описывает вспомогательную структуру с информацией о последней операции поиска"""
     def __init__(self):
         """
         Создает объект с информацией о результатах поиска
         self.Node = None - если в дереве нет узлов
         self.NodeHasKey = False - если узел не найден
-        self.ToLeft = True - если родительскому узлу надо 
-        добавить новый узел левым потомком    
+        self.ToLeft = True - если родительскому узлу надо
+        добавить новый узел левым потомком
         """
-        self.Node = None # None если в дереве вообще нету узлов
-        self.NodeHasKey = False # True если узел найден
-        self.ToLeft = False # True, если родительскому узлу надо 
-        # добавить новый узел левым потомком
-    
+        self.Node = None
+        self.NodeHasKey = False
+        self.ToLeft = False
+
     def FindNode(self, current_node: BSTNode, parent_node: BSTNode, key):
         """Поиск узла по значению, либо родительского узла, куда необходимо значение добавить"""
         if current_node is None:
@@ -55,99 +50,109 @@ class BST:
         return res.FindNode(self.Root, self.Root.Parent, key)
 
     def AddKeyValue(self, key, val):
-        res = self.FindNodeByKey(key) # добавляем ключ-значение в дерево
-        if res.NodeHasKey == True:
+        """Возвращает True, если удалось добавить новый элемент в дерево"""
+        res = self.FindNodeByKey(key)
+        if res.NodeHasKey is True:
             return False # если ключ уже есть
         if res.Node is None:
-            self.Root = BSTNode(key, val, None)        
-        if res.ToLeft == True:
+            self.Root = BSTNode(key, val, None)
+        if res.ToLeft is True:
             res.Node.LeftChild = BSTNode(key, val, res.Node)
-        if res.ToLeft == False:
+        if res.ToLeft is False:
             res.Node.RightChild = BSTNode(key, val, res.Node)
         return True
-  
+
     def FinMinMax(self, FromNode: BSTNode, FindMax: bool):
         """
         Возвращает ссылку на узел с максимальным/минимальным значением ключа
         FindMax = True - поиск максимума
         FindMax = False - поиск минимума
         """
-        if FindMax == True: # Поиск максимума
+        if FindMax is True:
             if FromNode.RightChild is not None:
                 return self.FinMinMax(FromNode.RightChild, FindMax)
             return FromNode
-        if FromNode.LeftChild is not None: # Поиск минимума
+        if FromNode.LeftChild is not None:
             return self.FinMinMax(FromNode.LeftChild, FindMax)
         return FromNode
-	
-    def __IsLeaf__(self, node: BSTNode):
-        """Возвращает True, если узел является листом"""
-        no_child = node.LeftChild is None and node.RightChild is None
-        return True if no_child else False
 
-    def DeleteNodeByKey1(self, key):
-        node_info = self.FindNodeByKey(key)# удаляем узел по ключу
-        node = node_info.Node
-        if node_info.NodeHasKey == False:
+    def _ReplaceNode_(self, node: BSTNode, new_node: BSTNode):
+        """
+        Возвращает True, если удалось заменить node на new_node в дереве.
+        Метод заменяет все взаимные связи как в узле-родителе, так и в узле-потомке.
+        Для удаления листа нужно подать агрумент new_node = None
+        """
+        if node.NodeKey == node.Parent.NodeKey:
             return False
-        if node is self.Root:
-            return False
-        #Случай, когда узел имеет два дочерних узла
-        if node.LeftChild is not None and node.RightChild is not None:
-            replace_node = self.FinMinMax(node.RightChild, False)
-            if self.__IsLeaf__(replace_node):
-                replace_node.Parent.LeftChild = None
-            else:
-                replace_node.Parent.LeftChild = replace_node.RightChild
-                replace_node.RightChild.Parent = replace_node.Parent
-            if node.NodeValue > node.Parent.NodeValue:
-                node.Parent.RightChild = node.LeftChild
-            else:
-                node.Parent.LeftChild = node.LeftChild
-            replace_node.Parent = node.Parent
-            #node.Parent = None
-            replace_node.LeftChild = node.LeftChild
-            #node.LeftChild = None
-            replace_node.RightChild = node.RightChild
-            #node.RightChild = None
-        #Если удаляемый узел имеет дочерний узел слева
-        elif node.LeftChild is not None:
-            if node.LeftChild.NodeValue > node.Parent.NodeValue:
-                node.Parent.RightChild = node.LeftChild
-            else:
-                node.Parent.LeftChild = node.LeftChild
-            node.LeftChild.Parent = node.Parent
-        #Если удаляемый узел имеет дочерний узел справа
-        elif node.RightChild is not None:
-            if node.RightChild.NodeValue > node.Parent.NodeValue:
-                node.Parent.RightChild = node.RightChild
-            else:
-                node.Parent.LeftChild = node.RightChild
-            node.RightChild.Parent = node.Parent
-        #Если удаляемый узел является листом
-        elif self.__IsLeaf__(node):
-            if node.NodeValue > node.Parent.NodeValue:
-                node.Parent.RightChild = None
-            else:
-                node.Parent.LeftChild = None
+        if node.NodeKey > node.Parent.NodeKey:
+            node.Parent.RightChild = new_node
+        if node.NodeKey < node.Parent.NodeKey:
+            node.Parent.LeftChild = new_node
+        if new_node is not None:
+            new_node.Parent = node.Parent
+            new_node.LeftChild = node.LeftChild
+            new_node.RightChild = node.RightChild
+        return True
+
+    def _ClearLink_(self, node: BSTNode):
+        """Удаляет ссылки на родительский и дочерние узлы"""
         node.Parent = None
         node.LeftChild = None
         node.RightChild = None
-        return True # если узел удален
 
-    def __node_screening__(self, current_nodes: list, nodes: list):
+    def _GetChilds_(self, node: BSTNode):
+        """
+        Возвращает список дочерних ненулевых узлов
+        дочерние узлы отсутствуют - []
+        есть только один узел - [узел]
+        есть оба узла - [левый узел, правый узел]
+        """
+        res = []
+        if node.LeftChild is not None:
+            res.append(node.LeftChild)
+        if node.RightChild is not None:
+            res.append(node.RightChild)
+        return res
+
+    def DeleteNodeByKey(self, key):
+        """Удаляет узел по заданному ключу. Возвращает True при успешном удалении"""
+        node_info = self.FindNodeByKey(key)
+        node = node_info.Node
+        node_childs = self._GetChilds_(node)
+        if node_info.NodeHasKey is False:
+            return False
+        if node is self.Root:
+            return False
+        if len(node_childs) == 0:
+            replacement_node = None
+        elif len(node_childs) == 1:
+            replacement_node = node_childs[0]
+        elif len(node_childs) == 2:
+            replacement_node = self.FinMinMax(node.RightChild, False)
+            temp_childs = self._GetChilds_(replacement_node)
+            self._ReplaceNode_(replacement_node, None)
+            if len(temp_childs) == 1:
+                node.RightChild = temp_childs[0]
+        self._ReplaceNode_(node, replacement_node)
+        self._ClearLink_(node)
+        return True
+
+    def Count(self):
+        """Возвращает количество узлов в дереве"""
+        count = len(self._NodeScreening_([self.Root], []))
+        return count
+
+    def _NodeScreening_(self, current_nodes: list, nodes: list):
+        """Возвращает список узлов в дереве"""
         for node in current_nodes:
             if node is not None:
                 nodes.append(node)
-                nodes = self.__node_screening__([node.LeftChild, node.RightChild], nodes)
+                nodes = self._NodeScreening_([node.LeftChild, node.RightChild], nodes)
         return nodes
 
-    def Count(self):
-        count = len(self.__node_screening__([self.Root], [])) # количество узлов в дереве)
-        return count
-
     def ListNodes(self):
-        nodes = self.__node_screening__([self.Root], [])
+        """Возвращает список значений всех узлов в дереве"""
+        nodes = self._NodeScreening_([self.Root], [])
         res = []
         for i in nodes:
             res.append(i.NodeValue)

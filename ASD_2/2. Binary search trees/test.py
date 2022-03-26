@@ -1,3 +1,4 @@
+"""Тесты для модуля, описывающего бинарное дерево поиска"""
 import unittest
 from main import BSTNode, BST
 
@@ -14,8 +15,9 @@ class MainTest(unittest.TestCase):
             tree.AddKeyValue(i, i)
         self.root = root
         self.tree = tree
-    
+
     def get_struct(self):
+        """Возвращает список дочерних узлов для каждого родительского узла"""
         res = []
         for i in range(1, ELEMENTS_COUNT+1):
             node = self.tree.FindNodeByKey(i).Node
@@ -29,7 +31,7 @@ class MainTest(unittest.TestCase):
             else:
                 rChild = node.RightChild.NodeValue
             res.append(lChild)
-            res.append(rChild) 
+            res.append(rChild)
         return res
 
     def test_tree(self):
@@ -58,7 +60,7 @@ class MainTest(unittest.TestCase):
         res = [node_find.Node.NodeValue, node_find.ToLeft]
         data = [15, False]
         self.assertEqual(data, res)
-    
+
     def test_add_exist_key(self):
         """Проверка добавления ключа с существующим значением"""
         res = self.tree.AddKeyValue(7, 7)
@@ -87,14 +89,15 @@ class MainTest(unittest.TestCase):
         self.assertEqual(res, data)
 
     def test_find_min_node(self):
-        """Поиск минимального значения начиная с NodeValue = 10"""
-        node = self.tree.FindNodeByKey(10).Node
-        print(node.LeftChild)
+        """Поиск минимального значения начиная с NodeValue = 6"""
+        self.tree.DeleteNodeByKey(5)
+        node = self.tree.FindNodeByKey(6).Node
         res = self.tree.FinMinMax(node, False).NodeValue
-        data = 9
+        data = 6
         self.assertEqual(res, data)
-    
+
     def test_count(self):
+        """Проверка счетчика узлов в дереве"""
         data = 15
         res = self.tree.Count()
         self.assertEqual(res, data)
@@ -120,13 +123,33 @@ class MainTest(unittest.TestCase):
         res = (node6.RightChild, self.tree.ListNodes(), self.tree.Count())
         data = (None, [8, 4, 2, 1, 3, 6, 5, 12, 10, 9, 11, 14, 13, 15], 14)
         self.assertEqual(res, data)
-    
-    def test_del_node(self):
-        """Проверка удаления узла с двумя листьями"""
+
+    def test_del_node_right_leaf_replace(self):
+        """Проверка удаления узла с двумя листьями; правый лист замещающий"""
         self.tree.DeleteNodeByKey(6)
         node4 = self.tree.FindNodeByKey(4).Node
-        res = (node4.LeftChild.NodeValue, self.tree.ListNodes(), self.tree.Count())
+        res = (node4.RightChild.NodeValue, self.tree.ListNodes(), self.tree.Count())
         data = (7, [8, 4, 2, 1, 3, 7, 5, 12, 10, 9, 11, 14, 13, 15], 14)
+        self.assertEqual(res, data)
+
+    def test_del_node_min_replace(self):
+        """Проверка удаления узла с двумя листьями; левый лист замещающий"""
+        self.tree.DeleteNodeByKey(12)
+        node8 = self.tree.FindNodeByKey(8).Node
+        res = (node8.RightChild.NodeValue, self.tree.ListNodes(), self.tree.Count())
+        data = (13, [8, 4, 2, 1, 3, 6, 5, 7, 13, 10, 9, 11, 14, 15], 14)
+        self.assertEqual(res, data)
+
+    def test_del_node_not_leaf_replace(self):
+        """
+        Проверка удаления узла с двумя листьями;
+        замещающий узел, имеет только правую ветвь
+        """
+        self.tree.DeleteNodeByKey(5)
+        self.tree.DeleteNodeByKey(4)
+        node8 = self.tree.FindNodeByKey(8).Node
+        res = (node8.LeftChild.NodeValue, self.tree.ListNodes(), self.tree.Count())
+        data = (6, [8, 6, 2, 1, 3, 7, 12, 10, 9, 11, 14, 13, 15], 13)
         self.assertEqual(res, data)
 
 if __name__ == "__main__":
