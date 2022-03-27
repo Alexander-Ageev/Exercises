@@ -166,5 +166,14 @@ class MainTest(unittest.TestCase):
         data = []
         self.assertEqual(res, data)
 
+    def test_nonint_tree(self):
+        """Проверка генерации дерева с нечисловыми узлами"""
+        root = BSTNode('b', 'b', None)
+        tree = BST(root)
+        tree.AddKeyValue('a', 'a')
+        res = tree.ListNodes(True)
+        data = [(None, 'b', 'a', None), ('b', 'a', None, None)]
+        self.assertEqual(res, data)
+
 if __name__ == "__main__":
     unittest.main()
