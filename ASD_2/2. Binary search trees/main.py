@@ -55,11 +55,11 @@ class BST:
         node_info = self.FindNodeByKey(key)
         if node_info.NodeHasKey is True:
             return False # если ключ уже есть
-        if node_info.Node is None:
+        elif node_info.Node is None:
             self.Root = BSTNode(key, val, None)
-        if node_info.ToLeft is True:
+        elif node_info.ToLeft is True:
             node_info.Node.LeftChild = BSTNode(key, val, node_info.Node)
-        if node_info.ToLeft is False:
+        elif node_info.ToLeft is False:
             node_info.Node.RightChild = BSTNode(key, val, node_info.Node)
         return True
 
