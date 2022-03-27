@@ -23,21 +23,22 @@ class BSTFind: # промежуточный результат поиска
         self.NodeHasKey = False
         self.ToLeft = False
 
-    def FindNode(self, current_node: BSTNode, parent_node: BSTNode, key):
+    def _FindNode_(self, current_node: BSTNode, key):
         """Поиск узла по значению, либо родительского узла, куда необходимо значение добавить"""
-        if current_node is None:
-            self.Node = parent_node
+        if current_node is None: #Ключ не найден, дошли до нижнего уровня дерева
             return self
-        if current_node.NodeKey > key:
-            self.ToLeft = True
-            return self.FindNode(current_node.LeftChild, current_node, key)
-        if current_node.NodeKey < key:
-            self.ToLeft = False
-            return self.FindNode(current_node.RightChild, current_node, key)
-        if current_node.NodeKey == key:
-            self.Node = current_node
+        elif current_node.NodeKey == key: #Ключ найден
             self.NodeHasKey = True
-        return self
+            self.Node = current_node
+            return self
+        elif current_node.NodeKey > key: #Идем по левой ветви
+            self.ToLeft = True
+            next_node = current_node.LeftChild
+        elif current_node.NodeKey < key: #Идем по право ветви
+            self.ToLeft = False
+            next_node = current_node.RightChild
+        self.Node = current_node
+        return self._FindNode_(next_node, key)
 
 class BST:
     """Класс описывает структуру бинарного дереа поиска"""
@@ -46,20 +47,20 @@ class BST:
 
     def FindNodeByKey(self, key):
         """Возвращает ссылку на узел и сопутстующую информацтю поиска"""
-        res = BSTFind()
-        return res.FindNode(self.Root, self.Root.Parent, key)
+        node_info = BSTFind()
+        return node_info._FindNode_(self.Root, key)
 
     def AddKeyValue(self, key, val):
         """Возвращает True, если удалось добавить новый элемент в дерево"""
-        res = self.FindNodeByKey(key)
-        if res.NodeHasKey is True:
+        node_info = self.FindNodeByKey(key)
+        if node_info.NodeHasKey is True:
             return False # если ключ уже есть
-        if res.Node is None:
+        if node_info.Node is None:
             self.Root = BSTNode(key, val, None)
-        if res.ToLeft is True:
-            res.Node.LeftChild = BSTNode(key, val, res.Node)
-        if res.ToLeft is False:
-            res.Node.RightChild = BSTNode(key, val, res.Node)
+        if node_info.ToLeft is True:
+            node_info.Node.LeftChild = BSTNode(key, val, node_info.Node)
+        if node_info.ToLeft is False:
+            node_info.Node.RightChild = BSTNode(key, val, node_info.Node)
         return True
 
     def FinMinMax(self, FromNode: BSTNode, FindMax: bool):
@@ -124,8 +125,6 @@ class BST:
         node_childs = self._GetChilds_(node)
         if node_info.NodeHasKey is False:
             return False
-        #if node is self.Root and len(node_childs) > 0:
-        #    return False
         if len(node_childs) == 0:
             replacement_node = None
         elif len(node_childs) == 1:
@@ -133,10 +132,10 @@ class BST:
             self._ReplaceNode_(replacement_node, None)
         elif len(node_childs) == 2:
             replacement_node = self.FinMinMax(node.RightChild, False)
-            temp_childs = self._GetChilds_(replacement_node)
+            rep_node_childs = self._GetChilds_(replacement_node)
             self._ReplaceNode_(replacement_node, None)
-            if len(temp_childs) == 1:
-                node.RightChild = temp_childs[0]
+            if len(rep_node_childs) == 1:
+                node.RightChild = rep_node_childs[0]
         self._ReplaceNode_(node, replacement_node)
         self._ClearLink_(node)
         return True

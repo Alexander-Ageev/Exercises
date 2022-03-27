@@ -175,5 +175,16 @@ class MainTest(unittest.TestCase):
         data = [(None, 'b', 'a', None), ('b', 'a', None, None)]
         self.assertEqual(res, data)
 
+    def test_empty_tree_info(self):
+        """Проверка генерации дерева с нечисловыми узлами"""
+        root = BSTNode('b', 'b', None)
+        tree = BST(root)
+        tree.DeleteNodeByKey('b')
+        print(tree.ListNodes())
+        info = tree.FindNodeByKey('b')
+        res = [info.Node, info.NodeHasKey, info.ToLeft]
+        data = [None, False, False]
+        self.assertEqual(res, data)
+
 if __name__ == "__main__":
     unittest.main()
