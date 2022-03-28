@@ -3,8 +3,7 @@ import unittest
 import random
 from main import BSTNode, BST
 
-NODES = [4, 12, 2, 6, 14, 1, 3, 7, 13]
-ELEMENTS_COUNT = random.randint(9) + 1
+ELEMENTS_COUNT = random.randint(0, 9) + 1
 ROOT = 0
 
 class MainTest(unittest.TestCase):
@@ -12,9 +11,12 @@ class MainTest(unittest.TestCase):
         """Автоматическая генерация тестового дерева. Проверка метода AddKeyValue"""
         root = BSTNode(ROOT, ROOT, None)
         tree = BST(root)
-        for i in ELEMENTS_COUNT:
+        keys = [0]
+        for i in range(ELEMENTS_COUNT):
             random_key = random.randint(-10, 10)
+            keys.append(random_key)
             tree.AddKeyValue(random_key, random_key)
+        self.keys = keys
         self.root = root
         self.tree = tree
 
@@ -22,7 +24,8 @@ class MainTest(unittest.TestCase):
         """Проверка обхода дерева в ширину"""
         nodes = self.tree.WideAllNodes()
         res = self.tree.ListNodes(nodes)
-        print(res)
+        print('keys: ', self.keys)
+        print('wide-order: ', res, '\n')
         data = []
         self.assertEqual(res, data)
 
@@ -30,21 +33,27 @@ class MainTest(unittest.TestCase):
         """Проверка обхода дерева в глубину. In-order"""
         nodes = self.tree.DeepAllNodes(0)
         res = self.tree.ListNodes(nodes)
-        data = [8, 4, 2, 1, 3, 6, 7, 12, 14, 13]
+        print('keys: ', self.keys)
+        print('in-order: ', res, '\n')
+        data = []
         self.assertEqual(res, data)
 
     def test_deep_post_order(self):
         """Проверка обхода дерева в глубину. Post-order"""
         nodes = self.tree.DeepAllNodes(1)
         res = self.tree.ListNodes(nodes)
-        data = [1, 3, 2, 7, 6, 4, 13, 14, 12, 8]
+        print('keys: ', self.keys)
+        print('post-order: ', res, '\n')
+        data = []
         self.assertEqual(res, data)
 
     def test_deep_pre_order(self):
         """Проверка обхода дерева в глубину. Pre-order"""
         nodes = self.tree.DeepAllNodes(2)
         res = self.tree.ListNodes(nodes)
-        data = [1, 2, 3, 4, 6, 7, 8, 12, 13, 14]
+        print('keys: ', self.keys)
+        print('pre-order: ', res, '\n')
+        data = []
         self.assertEqual(res, data)
 
 if __name__ == "__main__":

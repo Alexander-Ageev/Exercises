@@ -26,9 +26,8 @@ class MainTest(unittest.TestCase):
     def test_deep_in_order(self):
         """Проверка обхода дерева в глубину. In-order"""
         nodes = self.tree.DeepAllNodes(0)
-        print('123131312:', nodes)
         res = self.tree.ListNodes(nodes)
-        data = [8, 4, 2, 1, 3, 6, 7, 12, 14, 13]
+        data = [1, 2, 3, 4, 6, 7, 8, 12, 13, 14]
         self.assertEqual(res, data)
 
     def test_deep_post_order(self):
@@ -42,7 +41,7 @@ class MainTest(unittest.TestCase):
         """Проверка обхода дерева в глубину. Pre-order"""
         nodes = self.tree.DeepAllNodes(2)
         res = self.tree.ListNodes(nodes)
-        data = [1, 2, 3, 4, 6, 7, 8, 12, 13, 14]
+        data = [8, 4, 2, 1, 3, 6, 7, 12, 14, 13]
         self.assertEqual(res, data)
 
 if __name__ == "__main__":

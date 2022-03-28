@@ -150,12 +150,13 @@ class BST:
 
     def _in_order_screening_(self, current_node: BSTNode, nodes: list):
         """Возвращает список узлов в дереве. In-Order"""
-        nodes.append(current_node)
         if current_node.LeftChild is not None:
             nodes = self._in_order_screening_(current_node.LeftChild, nodes)
+        nodes.append(current_node)
         if current_node.RightChild is not None:
             nodes = self._in_order_screening_(current_node.RightChild, nodes)
         return nodes
+
 
     def _post_order_screening_(self, current_node: BSTNode, nodes: list):
         """Возвращает список узлов в дереве. Post-order"""
@@ -168,9 +169,9 @@ class BST:
 
     def _pre_order_screening_(self, current_node: BSTNode, nodes: list):
         """Возвращает список узлов в дереве. Pre-Order"""
+        nodes.append(current_node)
         if current_node.LeftChild is not None:
             nodes = self._pre_order_screening_(current_node.LeftChild, nodes)
-        nodes.append(current_node)
         if current_node.RightChild is not None:
             nodes = self._pre_order_screening_(current_node.RightChild, nodes)
         return nodes
