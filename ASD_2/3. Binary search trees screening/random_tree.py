@@ -1,18 +1,20 @@
 """Тесты для методов обхода бинарного дерева поиска"""
 import unittest
+import random
 from main import BSTNode, BST
 
 NODES = [4, 12, 2, 6, 14, 1, 3, 7, 13]
-ELEMENTS_COUNT = len(NODES) + 1
-ROOT = 8
+ELEMENTS_COUNT = random.randint(9) + 1
+ROOT = 0
 
 class MainTest(unittest.TestCase):
     def setUp(self) -> None:
         """Автоматическая генерация тестового дерева. Проверка метода AddKeyValue"""
         root = BSTNode(ROOT, ROOT, None)
         tree = BST(root)
-        for i in NODES:
-            tree.AddKeyValue(i, i)
+        for i in ELEMENTS_COUNT:
+            random_key = random.randint(-10, 10)
+            tree.AddKeyValue(random_key, random_key)
         self.root = root
         self.tree = tree
 
@@ -20,13 +22,13 @@ class MainTest(unittest.TestCase):
         """Проверка обхода дерева в ширину"""
         nodes = self.tree.WideAllNodes()
         res = self.tree.ListNodes(nodes)
-        data = [8, 4, 12, 2, 6, 14, 1, 3, 7, 13]
+        print(res)
+        data = []
         self.assertEqual(res, data)
 
     def test_deep_in_order(self):
         """Проверка обхода дерева в глубину. In-order"""
         nodes = self.tree.DeepAllNodes(0)
-        print('123131312:', nodes)
         res = self.tree.ListNodes(nodes)
         data = [8, 4, 2, 1, 3, 6, 7, 12, 14, 13]
         self.assertEqual(res, data)

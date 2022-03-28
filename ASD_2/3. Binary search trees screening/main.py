@@ -149,7 +149,7 @@ class BST:
         return count
 
     def _in_order_screening_(self, current_node: BSTNode, nodes: list):
-        """Возвращает список узлов в дереве. Pre-Order"""
+        """Возвращает список узлов в дереве. In-Order"""
         nodes.append(current_node)
         if current_node.LeftChild is not None:
             nodes = self._in_order_screening_(current_node.LeftChild, nodes)
@@ -184,12 +184,14 @@ class BST:
         При некорректном аргументе order возвращает False
         """
         if order == 0:
-            return self._in_order_screening_(self.Root, [])
-        if order == 1:
-            return self._post_order_screening_(self.Root, [])
-        if order == 2:
-            return self._pre_order_screening_(self.Root, [])
-        return False
+            nodes = self._in_order_screening_(self.Root, [])
+        elif order == 1:
+            nodes = self._post_order_screening_(self.Root, [])
+        elif order == 2:
+            nodes = self._pre_order_screening_(self.Root, [])
+        else:
+            nodes = []
+        return tuple(nodes)
 
     def _WideScreening_(self, root: list, nodes: list):
         new_nodes = []
@@ -204,9 +206,10 @@ class BST:
         return nodes
 
     def WideAllNodes(self):
-        return self._WideScreening_([self.Root], [self.Root])
+        nodes = self._WideScreening_([self.Root], [self.Root]) 
+        return tuple(nodes)
 
-    def ListNodes(self, nodes: list, detail = False):
+    def ListNodes(self, nodes: tuple, detail = False):
         """
         Возвращает список значений всех узлов в дереве.
         detail - режим предоставления детальной информации
