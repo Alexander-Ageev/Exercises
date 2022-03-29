@@ -69,11 +69,11 @@ class BST:
         FindMax = True - поиск максимума
         FindMax = False - поиск минимума
         """
-        if FindMax is True:
-            if FromNode.RightChild is not None:
-                return self.FinMinMax(FromNode.RightChild, FindMax)
+        if FindMax is True and FromNode.RightChild is not None:
+            return self.FinMinMax(FromNode.RightChild, FindMax)
+        elif FindMax is True and FromNode.RightChild is None:
             return FromNode
-        if FromNode.LeftChild is not None:
+        elif FindMax is False and FromNode.LeftChild is not None:
             return self.FinMinMax(FromNode.LeftChild, FindMax)
         return FromNode
 
@@ -153,26 +153,26 @@ class BST:
                 nodes = self._NodeScreening_([node.LeftChild, node.RightChild], nodes)
         return nodes
 
-    def ListNodes(self, mode = False):
+    def ListNodes(self, detail = False):
         """Возвращает список значений всех узлов в дереве"""
         nodes = self._NodeScreening_([self.Root], [])
         res = []
         for i in nodes:
-            if not mode:
-                data = i.NodeValue
+            if i.Parent is None:
+                parent = None
             else:
-                if i.Parent is None:
-                    parent = None
-                else:
-                    parent = i.Parent.NodeValue
-                if i.LeftChild is None:
-                    left_child = None
-                else:
-                    left_child = i.LeftChild.NodeValue
-                if i.RightChild is None:
-                    right_child = None
-                else:
-                    right_child = i.RightChild.NodeValue
+                parent = i.Parent.NodeValue
+            if i.LeftChild is None:
+                left_child = None
+            else:
+                left_child = i.LeftChild.NodeValue
+            if i.RightChild is None:
+                right_child = None
+            else:
+                right_child = i.RightChild.NodeValue
+            if detail:
                 data = (parent, i.NodeValue, left_child, right_child)
+            else:        
+                data = i.NodeValue
             res.append(data)
         return res
