@@ -11,7 +11,7 @@ class aBST:
         self.Tree - массив ключей дерева
         """
         tree_size = 0
-        for i in range(depth):
+        for i in range(depth + 1):
             tree_size += 2 ** i
         self.tree_size = tree_size
         self.Tree = [None] * tree_size # массив ключей

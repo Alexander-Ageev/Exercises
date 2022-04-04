@@ -8,7 +8,7 @@ TEST_NODES = [25, 75, 37, 62, 84, 31, 43, 55, 92]
 class MainTest(unittest.TestCase):
     def setUp(self) -> None:
         """Создание тестового дерева"""
-        self.tree = aBST(4)
+        self.tree = aBST(3)
         self.tree.AddKey(ROOT)
         for i in TEST_NODES:
             self.tree.AddKey(i)
@@ -33,7 +33,7 @@ class MainTest(unittest.TestCase):
 
     def test_zero_index_key_equal(self):
         """Проверка на корректность работы метода FindKeyIndex. Все дерево занято, ключ найден"""
-        tree = aBST(1)
+        tree = aBST(0)
         tree.AddKey(ROOT)
         res = tree.FindKeyIndex(50)
         data = 0
@@ -41,7 +41,7 @@ class MainTest(unittest.TestCase):
 
     def test_zero_index_key_not_equal(self):
         """Проверка на корректность работы метода FindKeyIndex. Все дерево занято, ключ не найден"""
-        tree = aBST(1)
+        tree = aBST(0)
         tree.AddKey(ROOT)
         res = tree.FindKeyIndex(51)
         data = None
