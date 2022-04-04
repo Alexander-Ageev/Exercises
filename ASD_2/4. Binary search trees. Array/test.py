@@ -39,13 +39,28 @@ class MainTest(unittest.TestCase):
         data = 0
         self.assertEqual(data, res)
 
-    def test_zero_index_key_not_equal(self):
+    def test_no_find_key_in_zero_depth(self):
         """Проверка на корректность работы метода FindKeyIndex. Все дерево занято, ключ не найден"""
         tree = aBST(0)
         tree.AddKey(ROOT)
         res = tree.FindKeyIndex(51)
         data = None
         self.assertEqual(data, res)
+
+    def test_no_add_key_in_zero_depth(self):
+        """Проверка на корректность работы метода AddKeyIndex. Все дерево занято, ключ не найден"""
+        tree = aBST(0)
+        tree.AddKey(ROOT)
+        res = tree.AddKey(51)
+        data = -1
+        self.assertEqual(data, res)
+
+    def test_add_exist_key(self):
+        """Проверка на добавление существующего ключа"""
+        res = self.tree.AddKey(50)
+        data = 0
+        print(self.tree.Tree)
+        self.assertAlmostEqual(res, data)
 
     def test_full_tree(self):
         """Заплняем дерево, проверяем результат"""

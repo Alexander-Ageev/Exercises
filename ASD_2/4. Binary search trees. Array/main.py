@@ -31,7 +31,7 @@ class aBST:
             index = -1
         elif index == 0 and self.Tree[index] is None:
             self.Tree[index] = key
-        elif index == 0 and self.Tree[index] is not None:
+        elif index == 0 and self.Tree[index] != key:
             index = -1
         elif index < 0:
             index = abs(index)
