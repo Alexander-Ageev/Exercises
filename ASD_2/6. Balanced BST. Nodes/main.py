@@ -1,5 +1,5 @@
 """
-Модуль описывает реализацию балансировки бинарного дерева поиска, 
+Модуль описывает реализацию балансировки бинарного дерева поиска,
 реализованного через узлы
 """
 
@@ -56,7 +56,7 @@ class BalancedBST:
         node_info = BSTFind()
         return node_info._FindNode_(self.Root, key)
 
-    def AddKeyValue(self, key, val):
+    def AddKeyValue(self, key):
         """Возвращает True, если удалось добавить новый элемент в дерево"""
         node_info = self.FindNodeByKey(key)
         if node_info.NodeHasKey is True:
@@ -87,13 +87,12 @@ class BalancedBST:
         for part in part_array:
             mid_index = self.GetMiddleIndex(part)
             if mid_index != -1:
-                self.AddKeyValue(part[mid_index], part[mid_index])           
+                self.AddKeyValue(part[mid_index])
                 left_branch = part[0: mid_index]
                 right_branch = part[mid_index+1:]
                 new_parts += [left_branch, right_branch]
         if new_parts != []:
             self._GenTree_(new_parts)
-        return None
 
     def GenerateTree(self, a: list):
         """
@@ -102,30 +101,32 @@ class BalancedBST:
         """
         a.sort()
         self._GenTree_([a])
-    
+
+    def _CheckBalance_(self, root: list, depth, inbalance_depth):
+        """
+        Возвращает разницу в глубине между первым
+        и последним не полностью заполненными уровнями узлов.
+        """
+        nodes = []
+        for node in root:
+            if node.LeftChild is not None:
+                nodes.append(node.LeftChild)
+            if node.RightChild is not None:
+                nodes.append(node.RightChild)
+        if len(nodes) <= 0:
+            return depth - inbalance_depth
+        if len(nodes) == 2 ** depth and inbalance_depth == depth:
+            inbalance_depth += 1
+        depth += 1
+        return self._CheckBalance_(nodes, depth, inbalance_depth)
+
     def IsBalanced(self, root_node):
-        if root_node
-
-
-
-
-
-
-        return False # сбалансировано ли дерево с корнем root_node
-
-
-
-
-
-
-
-
-
-
-
-
+        """Возвращает True, если дерево сбалансировано (имеет разницу по глубине болеее 1 ветви)."""
+        res = self._CheckBalance_([root_node], 1, 1)
+        return res <= 1
 
     def _WideScreening_(self, root: list, nodes: list):
+        """Обход дерева в ширину"""
         new_nodes = []
         for node in root:
             if node.LeftChild is not None:
@@ -140,7 +141,7 @@ class BalancedBST:
     def ListNodes(self, detail = False):
         """
         Возвращает список значений всех узлов в дереве в порядке по уровням.
-        Если detail = True, возвращает список кортежей с подробной информацией 
+        Если detail = True, возвращает список кортежей с подробной информацией
         о стуктуре дерева:
         1. Уровень узла
         2. Значение(ключ) родительского узла
@@ -165,7 +166,7 @@ class BalancedBST:
                 right_child = i.RightChild.KeyNode
             if detail:
                 data = (i.Level, parent, i.KeyNode, left_child, right_child)
-            else:        
+            else:
                 data = i.KeyNode
             res.append(data)
         return res
