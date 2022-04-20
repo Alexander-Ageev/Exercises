@@ -6,7 +6,7 @@
 class BSTNode:
     """Инициализация объекта Node - основного элемента дерева"""
     def __init__(self, key, parent):
-        self.KeyNode = key # ключ узла
+        self.NodeKey = key # ключ узла
         self.Parent = parent # родитель или None для корня
         self.LeftChild = None # левый потомок
         self.RightChild = None # правый потомок
@@ -33,14 +33,14 @@ class BSTFind: # промежуточный результат поиска
         """Поиск узла по значению, либо родительского узла, куда необходимо значение добавить"""
         if current_node is None: #Ключ не найден, дошли до нижнего уровня дерева
             return self
-        elif current_node.KeyNode == key: #Ключ найден
+        elif current_node.NodeKey == key: #Ключ найден
             self.NodeHasKey = True
             self.Node = current_node
             return self
-        elif current_node.KeyNode > key: #Идем по левой ветви
+        elif current_node.NodeKey > key: #Идем по левой ветви
             self.ToLeft = True
             next_node = current_node.LeftChild
-        elif current_node.KeyNode < key: #Идем по правой ветви
+        elif current_node.NodeKey < key: #Идем по правой ветви
             self.ToLeft = False
             next_node = current_node.RightChild
         self.Node = current_node
@@ -155,18 +155,18 @@ class BalancedBST:
             if i.Parent is None:
                 parent = None
             else:
-                parent = i.Parent.KeyNode
+                parent = i.Parent.NodeKey
             if i.LeftChild is None:
                 left_child = None
             else:
-                left_child = i.LeftChild.KeyNode
+                left_child = i.LeftChild.NodeKey
             if i.RightChild is None:
                 right_child = None
             else:
-                right_child = i.RightChild.KeyNode
+                right_child = i.RightChild.NodeKey
             if detail:
-                data = (i.Level, parent, i.KeyNode, left_child, right_child)
+                data = (i.Level, parent, i.NodeKey, left_child, right_child)
             else:
-                data = i.KeyNode
+                data = i.NodeKey
             res.append(data)
         return res
