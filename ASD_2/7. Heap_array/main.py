@@ -3,11 +3,10 @@
 """
 
 class Heap:
-
     def __init__(self):
         self.HeapArray = [] # хранит неотрицательные числа-ключи
         self.MaxSize = 0
-	
+
     def MakeHeap(self, a, depth):
         """
         Создает пирамиду из массива a.
@@ -17,7 +16,7 @@ class Heap:
         if len(a) > self.MaxSize:
             a = a[0: self.MaxSize]
         for element in a:
-            self.Add(element)   
+            self.Add(element)
 
     def GetMax(self):
         """
@@ -25,16 +24,13 @@ class Heap:
         Возвращает -1, если пирамида пуста.
         """
         if len(self.HeapArray) == 0:
-            return -1
-        elif len(self.HeapArray) == 1:    
+            root = -1
+        elif len(self.HeapArray) == 1:
             root = self.HeapArray.pop(0)
         else:
             self.HeapArray[0], self.HeapArray[-1] = self.HeapArray[-1], self.HeapArray[0]
             root = self.HeapArray.pop(-1)
             self.MoveDown(self.HeapArray[0], 0)
-        
-        print('root:', root)
-
         return root
 
     def Add(self, key):
@@ -69,16 +65,12 @@ class Heap:
         если родитель меньше максимального из потомков -> родитель и потомок меняются местами.
         Операция повторяется, пока родитель не будет больше обоих своих потомков.
         """
-        
-        print('array:', self.HeapArray)
-        
         left_child_index = 2 * index + 1
-        childs = self.HeapArray[left_child_index: left_child_index + 2]
-        max_child = max(childs)
-        max_index = left_child_index + childs.index(max_child)
-
-        print("max_index:", max_index)
-
-        if max_index < len(self.HeapArray) and key < max_child:
+        max_child = -1
+        if left_child_index < len(self.HeapArray):
+            childs = self.HeapArray[left_child_index: left_child_index + 2]
+            max_child = max(childs)
+            max_index = left_child_index + childs.index(max_child)
+        if key < max_child:
             self.HeapArray[index], self.HeapArray[max_index] = self.HeapArray[max_index], self.HeapArray[index]
             self.MoveDown(key, max_index)
