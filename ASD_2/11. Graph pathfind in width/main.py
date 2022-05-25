@@ -83,7 +83,7 @@ class SimpleGraph:
                 return i
         return None
 
-    def DepthStep(self, current_vertex_id: int, search_vertex_id: int, stack: list):
+    def _DepthStep_(self, current_vertex_id: int, search_vertex_id: int, stack: list):
         """
         Возвращает путь от заданной вершины до search_vertex_id в виде списка на объекты Vertex.
         Путь записывается в self.stack.
@@ -103,42 +103,55 @@ class SimpleGraph:
         elif new_vertex_id is None and len(stack) <= 1:
             stack.pop(-1)
             return stack
-        self.DepthStep(new_vertex_id, search_vertex_id, stack)
+        self._DepthStep_(new_vertex_id, search_vertex_id, stack)
         return stack
 
     def DepthFirstSearch(self, VFrom: int, VTo: int):
         """
         Возвращает путь от вершины с индексом VFrom к вершине с индексом VTo.
+        Обходит граф в глубину.
         Путь представляет собой список элементов типа Vertex или пустой список,
         если вершины не связаны
         """
         self.InitSearch()
-        return self.DepthStep(VFrom, VTo, [])
+        return self._DepthStep_(VFrom, VTo, [])
 
-
-    def WidthStep(self, current_vertex_id: int, search_vertex_id: int, queue: list, buffer: list):
-        self.vertex[current_vertex_id].Hit = True
-        buffer.append(current_vertex_id)
+    def _WidthStep_(self, current_vertex_id: int, search_vertex_id: int,
+                                                queue: list, last_path: list):
+        """
+        Возвращает один из кратчайших путей между вершинами current_vertex и search_vertex.
+        Результат возвращается в виде списка ссылок на объекты Vertex.
+        Входные параметры задаются в виде индексов списка self.vertex,
+        которым соответствуют вершины current_vertex и search_vertex.
+        Если путь не найден, возвращается пустой список.
+        """
         adjasent_vertex = self.GetAdjasentVertex(current_vertex_id)
         new_vertex_id = self.GetNotHitVertex(adjasent_vertex)
-        if new_vertex_id == search_vertex_id:
-            buffer.append(new_vertex_id)
-            return buffer
-        elif new_vertex_id is None and len(queue) > 1:
-            queue.pop(0)
-            buffer.pop(-1)
-            new_vertex_id = self.vertex.index(queue[0])
-        elif new_vertex_id is None and len(queue) <= 1:
-            return []
-        queue.append(self.vertex[new_vertex_id])
-        self.vertex[new_vertex_id].Hit = True
-        self.WidthStep(current_vertex_id, search_vertex_id, queue)
-        return buffer
+        if last_path == [] and new_vertex_id is not None:
+            path = [self.vertex[current_vertex_id], self.vertex[new_vertex_id]]
+        elif new_vertex_id is not None:
+            path = list(last_path)
+            path.append(self.vertex[new_vertex_id])
 
+        if new_vertex_id == search_vertex_id:
+            pass
+        elif new_vertex_id is None and len(queue) > 0:
+            path, new_vertex = queue.pop(0)
+            new_vertex_id = self.vertex.index(new_vertex)
+            path = self._WidthStep_(new_vertex_id, search_vertex_id, queue, path)
+        elif new_vertex_id is None and len(queue) <= 0:
+            path = []
+        else:
+            self.vertex[new_vertex_id].Hit = True
+            queue.append((path, self.vertex[new_vertex_id]))
+            path = self._WidthStep_(current_vertex_id, search_vertex_id, queue, last_path)
+        return path
 
     def BreadthFirstSearch(self, VFrom, VTo):
-
+        """
+        Инициализация поиска в ширину.
+        Узлы задаются позициями в списке self.vertex
+        """
         self.InitSearch()
-        # узлы задаются позициями в списке vertex
-        # возвращается список узлов -- путь из VFrom в VTo
-        # или [] если пути нету
+        self.vertex[VFrom].Hit = True
+        return self._WidthStep_(VFrom, VTo, [], [])
