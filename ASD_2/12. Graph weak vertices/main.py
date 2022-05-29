@@ -1,4 +1,7 @@
-"""Модуль описывает реализацию класса Simple Graph и метода обхода графа в глубину"""
+"""
+Модуль описывает реализацию класса Simple Graph и метода обхода графа в глубину и ширину,
+а также метод определения слабых вершин - вершин, которые не образуют с соседями треугольник. 
+"""
 class Vertex:
     """Класс описывает вершину графа. Вершина содержит информацию - абстрактное значение"""
     def __init__(self, val):
@@ -70,11 +73,11 @@ class SimpleGraph:
 
     def GetAdjasentVertex(self, current_vertex_id: int):
         """Возвращает список индексов смежных вершин"""
-        adjasent_vertex = []
+        adjacent_vertex = []
         for i in range(len(self.m_adjacency[current_vertex_id])):
             if self.m_adjacency[current_vertex_id][i] == 1:
-                adjasent_vertex.append(i)
-        return adjasent_vertex
+                adjacent_vertex.append(i)
+        return adjacent_vertex
 
     def GetNotHitVertex(self, vertex_idx: list):
         """Возвращает индекс первой непосещенной вершины из списка"""
@@ -83,7 +86,7 @@ class SimpleGraph:
                 return i
         return None
 
-    def CheckVertex(self, current_vertex_id, search_vertex_id, stack: list):
+    def _DepthStep_(self, current_vertex_id: int, search_vertex_id: int, stack: list):
         """
         Возвращает путь от заданной вершины до search_vertex_id в виде списка на объекты Vertex.
         Путь записывается в self.stack.
@@ -100,17 +103,68 @@ class SimpleGraph:
         elif new_vertex_id is None and len(stack) > 1:
             stack.pop(-1)
             new_vertex_id = self.vertex.index(stack[-1])
-        elif new_vertex_id is None and len(stack) == 1:
+        elif new_vertex_id is None and len(stack) <= 1:
             stack.pop(-1)
             return stack
-        self.CheckVertex(new_vertex_id, search_vertex_id, stack)
+        self._DepthStep_(new_vertex_id, search_vertex_id, stack)
         return stack
 
     def DepthFirstSearch(self, VFrom: int, VTo: int):
         """
         Возвращает путь от вершины с индексом VFrom к вершине с индексом VTo.
+        Обходит граф в глубину.
         Путь представляет собой список элементов типа Vertex или пустой список,
         если вершины не связаны
         """
         self.InitSearch()
-        return self.CheckVertex(VFrom, VTo, [])
+        return self._DepthStep_(VFrom, VTo, [])
+
+    def _WidthStep_(self, current_vertex_id: int, search_vertex_id: int,
+                                                queue: list, last_path: list):
+        """
+        Возвращает один из кратчайших путей между вершинами current_vertex и search_vertex.
+        Результат возвращается в виде списка ссылок на объекты Vertex.
+        Входные параметры задаются в виде индексов списка self.vertex,
+        которым соответствуют вершины current_vertex и search_vertex.
+        Если путь не найден, возвращается пустой список.
+        """
+        adjacent_vertex = self.GetAdjasentVertex(current_vertex_id)
+        new_vertex_id = self.GetNotHitVertex(adjacent_vertex)
+        if last_path == [] and new_vertex_id is not None:
+            path = [self.vertex[current_vertex_id], self.vertex[new_vertex_id]]
+        elif new_vertex_id is not None:
+            path = list(last_path)
+            path.append(self.vertex[new_vertex_id])
+
+        if new_vertex_id == search_vertex_id:
+            pass
+        elif new_vertex_id is None and len(queue) > 0:
+            path, new_vertex = queue.pop(0)
+            new_vertex_id = self.vertex.index(new_vertex)
+            path = self._WidthStep_(new_vertex_id, search_vertex_id, queue, path)
+        elif new_vertex_id is None and len(queue) <= 0:
+            path = []
+        else:
+            self.vertex[new_vertex_id].Hit = True
+            queue.append((path, self.vertex[new_vertex_id]))
+            path = self._WidthStep_(current_vertex_id, search_vertex_id, queue, last_path)
+        return path
+
+    def BreadthFirstSearch(self, VFrom, VTo):
+        """
+        Инициализация поиска в ширину.
+        Узлы задаются позициями в списке self.vertex
+        """
+        self.InitSearch()
+        self.vertex[VFrom].Hit = True
+        return self._WidthStep_(VFrom, VTo, [], [])
+
+
+    def _IsTriangle_(self, vertex: int, adjacent_vertex: int):
+
+        for adjacent
+
+
+    def WeakVertices(self):
+        # возвращает список узлов вне треугольников
+        return []

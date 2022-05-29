@@ -68,7 +68,7 @@ class SimpleGraph:
         for vertex in self.vertex:
             vertex.Hit = False
 
-    def GetAdjasentVertex(self, current_vertex_id: int):
+    def GetAdjacentVertex(self, current_vertex_id: int):
         """Возвращает список индексов смежных вершин"""
         adjasent_vertex = []
         for i in range(len(self.m_adjacency[current_vertex_id])):
@@ -92,9 +92,9 @@ class SimpleGraph:
         if self.vertex[current_vertex_id].Hit is False:
             self.vertex[current_vertex_id].Hit = True
             stack.append(self.vertex[current_vertex_id])
-        adjasent_vertex_idx = self.GetAdjasentVertex(current_vertex_id)
-        new_vertex_id = self.GetNotHitVertex(adjasent_vertex_idx)
-        if search_vertex_id in adjasent_vertex_idx:
+        adjacent_vertex_idx = self.GetAdjacentVertex(current_vertex_id)
+        new_vertex_id = self.GetNotHitVertex(adjacent_vertex_idx)
+        if search_vertex_id in adjacent_vertex_idx:
             stack.append(self.vertex[search_vertex_id])
             return stack
         elif new_vertex_id is None and len(stack) > 1:

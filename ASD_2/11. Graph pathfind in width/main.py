@@ -68,13 +68,13 @@ class SimpleGraph:
         for vertex in self.vertex:
             vertex.Hit = False
 
-    def GetAdjasentVertex(self, current_vertex_id: int):
+    def GetAdjacentVertex(self, current_vertex_id: int):
         """Возвращает список индексов смежных вершин"""
-        adjasent_vertex = []
+        adjacent_vertex = []
         for i in range(len(self.m_adjacency[current_vertex_id])):
             if self.m_adjacency[current_vertex_id][i] == 1:
-                adjasent_vertex.append(i)
-        return adjasent_vertex
+                adjacent_vertex.append(i)
+        return adjacent_vertex
 
     def GetNotHitVertex(self, vertex_idx: list):
         """Возвращает индекс первой непосещенной вершины из списка"""
@@ -92,7 +92,7 @@ class SimpleGraph:
         if self.vertex[current_vertex_id].Hit is False:
             self.vertex[current_vertex_id].Hit = True
             stack.append(self.vertex[current_vertex_id])
-        adjasent_vertex_idx = self.GetAdjasentVertex(current_vertex_id)
+        adjasent_vertex_idx = self.GetAdjacentVertex(current_vertex_id)
         new_vertex_id = self.GetNotHitVertex(adjasent_vertex_idx)
         if search_vertex_id in adjasent_vertex_idx:
             stack.append(self.vertex[search_vertex_id])
@@ -125,8 +125,8 @@ class SimpleGraph:
         которым соответствуют вершины current_vertex и search_vertex.
         Если путь не найден, возвращается пустой список.
         """
-        adjasent_vertex = self.GetAdjasentVertex(current_vertex_id)
-        new_vertex_id = self.GetNotHitVertex(adjasent_vertex)
+        adjacent_vertex = self.GetAdjacentVertex(current_vertex_id)
+        new_vertex_id = self.GetNotHitVertex(adjacent_vertex)
         if last_path == [] and new_vertex_id is not None:
             path = [self.vertex[current_vertex_id], self.vertex[new_vertex_id]]
         elif new_vertex_id is not None:
