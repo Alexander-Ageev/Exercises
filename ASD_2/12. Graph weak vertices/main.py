@@ -74,9 +74,11 @@ class SimpleGraph:
     def GetAdjasentVertex(self, current_vertex_id: int):
         """Возвращает список индексов смежных вершин"""
         adjacent_vertex = []
-        for i in range(len(self.m_adjacency[current_vertex_id])):
-            if self.m_adjacency[current_vertex_id][i] == 1:
-                adjacent_vertex.append(i)
+        index = 0
+        for vertex in self.m_adjacency[current_vertex_id]:
+            if vertex == 1:
+                adjacent_vertex.append(index)
+            index += 1
         return adjacent_vertex
 
     def GetNotHitVertex(self, vertex_idx: list):
@@ -159,12 +161,32 @@ class SimpleGraph:
         self.vertex[VFrom].Hit = True
         return self._WidthStep_(VFrom, VTo, [], [])
 
-
-    def _IsTriangle_(self, vertex: int, adjacent_vertex: int):
-
-        for adjacent
-
+    def _GetTriangle_(self, vertex_id: int):
+        """
+        Возвращает список вершин, которые образуют треугольник.
+        Треугольник - три вершины, соединенные друг с тругом ребрами.
+        Если вершина является частью треугольника,
+        возвращает список [Исходная вершина, вершина 1, вершина 2].
+        При этом, индекс вершины 1 всегда менше индекса вершины 2.
+        Если верршина не является частью треугольника, возвращает []
+        """
+        adjacent_vertex = self.GetAdjasentVertex(vertex_id)
+        while len(adjacent_vertex) > 1:
+            v1 = adjacent_vertex.pop(0)
+            for i in adjacent_vertex:
+                if self.IsEdge(v1, i):
+                    return [vertex_id, v1, i]
+        return []
 
     def WeakVertices(self):
-        # возвращает список узлов вне треугольников
-        return []
+        """ Возвращает список вершин, не входящих в треугольники"""
+        weak_vertex = []
+        strong_vertex = set()
+        for current_vertex_id in range(len(self.vertex)):
+            if current_vertex_id not in strong_vertex:
+                triangle = self._GetTriangle_(current_vertex_id)
+                if triangle == []:
+                    weak_vertex.append(self.vertex[current_vertex_id])
+                else:
+                    strong_vertex.union(triangle)
+        return weak_vertex
