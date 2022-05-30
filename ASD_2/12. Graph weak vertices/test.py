@@ -1,6 +1,7 @@
 """
-Модуль содержит тесты для реализации поиска в ширину в Simple Graph
-и нахождения кратчайшего пути между вершинами
+Модуль содержит тесты для реализации поиска слабых вершин графа.
+Слабая вершина - вершина, которая не образует треугольник с двумя соседними.
+
 """
 import unittest
 from main import SimpleGraph
@@ -39,38 +40,36 @@ class MainTest(unittest.TestCase):
             self.graph.AddEdge(v1, v2)
 
     def test_setup(self):
+        """Проверка корректности базового графа"""
         data = self.graph.m_adjacency
         res = BASIC_MATRIX
         self.assertEqual(data, res)
 
-    def test_GetTriangle_true(self):
-        """Проверка метода обнаружения треуугольника"""
+    def test_get_triangle_true(self):
+        """Треугольник найден"""
         data = self.graph._GetTriangle_(0)
         res = [0, 3, 4]
         self.assertEqual(res, data)
 
-    def test_GetTriangle_false(self):
-        """Проверка метода обнаружения треуугольника"""
+    def test_get_triangle_false(self):
+        """Треугольник не найден"""
         data = self.graph._GetTriangle_(1)
         res = []
         self.assertEqual(res, data)
 
     def test_weak_base(self):
-        """Проверка метода обнаружения треуугольника"""
+        """Тест на базовом графе"""
         data = self.graph.WeakVertices()
         res = [self.graph.vertex[1], self.graph.vertex[8]]
         self.assertEqual(res, data)
 
     def test_weak_none(self):
-        """Проверка метода обнаружения треуугольника"""
-        self.graph.RemoveVertex(1)
-        self.graph.RemoveVertex(8)
+        """Проверка возвращения пустого списка"""
+        self.graph.AddEdge(1, 4)
+        self.graph.AddEdge(5, 8)
         data = self.graph.WeakVertices()
         res = []
         self.assertEqual(res, data)
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
